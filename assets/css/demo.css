@@ -144,6 +144,7 @@
   color: inherit;
   background-color: transparent;
 }
+
 .demo-button:focus {
   outline: none;
   background-color: white;
@@ -151,6 +152,28 @@
 .demo-button:active {
   border-color: var(--color-border);
 }
+
+.demo-button-sugr-start {
+  align-self: flex-start;
+  margin-right: 0.5em;
+  border: 2px solid;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 1.2em;
+  padding: .4em 1.2em;
+  color: inherit;
+  background-color: transparent;
+}
+
+.demo-button-sugr-start:focus{
+  outline: none;
+  background-color: white;
+}
+
+.demo-button-sugr-start:active{
+  border-color: var(--color-border);
+}
+
 
 .demo-input {
   flex: 1;

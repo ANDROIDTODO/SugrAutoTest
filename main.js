@@ -8,12 +8,57 @@ if (require.main !== module) {
 const path = require('path')
 const glob = require('glob')
 const {app, BrowserWindow} = require('electron')
+const net = require('net');
 
 const debug = /--debug/.test(process.argv[2])
 
 if (process.mas) app.setName('Electron APIs')
 
 let mainWindow = null
+
+
+function initSocket(){
+
+
+
+
+  const server = net.createServer((socket) => {
+
+
+  console.log('connect: ' +
+      socket.remoteAddress + ':' + socket.remotePort);
+
+      socket.on('data' ,(data) => {
+        mainWindow.webContents.send('socket-client','aaa')
+        console.log('client send:' + data);
+
+      });
+
+  socket.on('close',(data) => {
+      console.log('client closed!');
+     // socket.remoteAddress + ' ' + socket.remotePort);
+    });
+
+
+}).on('error', (err) => {
+  // handle errors here
+  throw err;
+});
+
+// grab an arbitrary unused port.
+server.listen({
+  host: 'localhost',
+  port: 9201,
+  exclusive: true
+},() => {
+  console.log('opened server on', server.address());
+});
+
+}
+
+
+
+
 
 function initialize () {
   const shouldQuit = makeSingleInstance()
@@ -23,6 +68,7 @@ function initialize () {
 
   function createWindow () {
     const windowOptions = {
+      frame:false,
       width: 1080,
       minWidth: 680,
       height: 840,
@@ -63,6 +109,7 @@ function initialize () {
       createWindow()
     }
   })
+
 }
 
 // Make this app a single instance app.
@@ -86,7 +133,12 @@ function makeSingleInstance () {
 // Require each JS file in the main-process dir
 function loadDemos () {
   const files = glob.sync(path.join(__dirname, 'main-process/**/*.js'))
-  files.forEach((file) => { require(file) })
+  files.forEach((file) => { 
+    console.log("require file path:" + file);
+    require(file) })
+
+  // require(path.join(__dirname,'script/socketmanager.js'));
 }
 
 initialize()
+initSocket()
