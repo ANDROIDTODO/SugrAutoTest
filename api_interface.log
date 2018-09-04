@@ -1,0 +1,50 @@
+1.获取card信息，登录之后就能拿到
+https://alexa.amazon.com/api/cards
+
+
+
+
+
+
+
+2.获取listId，登录之后就能拿到
+https://alexa.amazon.com/api/namedLists
+
+  "lists" : [
+    {
+      "nbestItems" : null,
+      "version" : 1,
+      "createdDate" : 1535868553216,
+      "originalAudioId" : null,
+      "archived" : false,
+      "customerId" : "A1RJG2SWBS40DW",
+      "type" : "SHOPPING_LIST",
+      "listIds" : [
+        "YW16bjEuYWNjb3VudC5BRVpHNFNNVkVRWVNLVFJRREFORjJZNU1aWFRRLVNIT1BQSU5HX0lURU0="
+      ],
+      "updatedDate" : 1535868553216,
+      "defaultList" : true,
+      "name" : null,
+      "itemId" : "YW16bjEuYWNjb3VudC5BRVpHNFNNVkVRWVNLVFJRREFORjJZNU1aWFRRLVNIT1BQSU5HX0lURU0="
+    },
+    {
+      "nbestItems" : null,
+      "version" : 1,
+      "createdDate" : 1535868553216,
+      "originalAudioId" : null,
+      "archived" : false,
+      "customerId" : "A1RJG2SWBS40DW",
+      "type" : "TO_DO",
+      "listIds" : [
+        "YW16bjEuYWNjb3VudC5BRVpHNFNNVkVRWVNLVFJRREFORjJZNU1aWFRRLVRBU0s="
+      ],
+      "updatedDate" : 1535868553216,
+      "defaultList" : true,
+      "name" : null,
+      "itemId" : "YW16bjEuYWNjb3VudC5BRVpHNFNNVkVRWVNLVFJRREFORjJZNU1aWFRRLVRBU0s="
+    }
+  ]
+
+
+3.获取todolist信息，要先拿到listId
+https://alexa.amazon.com/api/namedLists/{itemId}/items
