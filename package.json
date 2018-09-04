@@ -54,8 +54,11 @@
     "electron-shortcut-normalizer": "^1.0.0",
     "glob": "^7.1.0",
     "highlight.js": "^9.3.0",
+    "moment": "^2.22.2",
+    "nodemailer": "^4.6.8",
     "selenium-webdriver": "^4.0.0-alpha.1",
-    "update-electron-app": "^1.1.1"
+    "update-electron-app": "^1.1.1",
+    "uuid": "^3.3.2"
   },
   "standard": {
     "env": {
