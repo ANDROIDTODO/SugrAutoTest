@@ -10,7 +10,9 @@ const path = require('path')
 const glob = require('glob')
 const {app, BrowserWindow} = require('electron')
 const net = require('net')
-const socketm = require(path.join(__dirname,'script/socketmanager.js'))
+const socketm = require(path.join(__dirname,'sugr/socketmanager.js'))
+
+
 const debug = /--debug/.test(process.argv[2])
 
 let mainWindow = null
@@ -78,7 +80,7 @@ function initialize () {
       mainWindow = null
     })
 
-    socketm.initMainProcess(mainWindow);
+    socketm.initMainProcess(mainWindow)
   }
 
   app.on('ready', () => {
@@ -118,13 +120,15 @@ function makeSingleInstance () {
 
 // Require each JS file in the main-process dir
 function loadDemos () {
-  const files = glob.sync(path.join(__dirname, 'main-process/**/*.js'))
-  files.forEach((file) => {
-    console.log('require file path:' + file)
-    require(file)
-  })
+  // const files = glob.sync(path.join(__dirname, 'main-process/**/*.js'))
+  // files.forEach((file) => {
+  //   console.log('require file path:' + file)
+  //   require(file)
+  // })
 
-  // require(path.join(__dirname,'script/socketmanager.js'));
+  require(path.join(__dirname,'sugr/consolemanager.js'));
+  require(path.join(__dirname,'sugr/main.js'));
+
 }
 
 initialize()

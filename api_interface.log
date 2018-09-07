@@ -48,3 +48,160 @@ https://alexa.amazon.com/api/namedLists
 
 3.获取todolist信息，要先拿到listId
 https://alexa.amazon.com/api/namedLists/{itemId}/items
+
+4.获取所有该账号的device信息
+https://alexa.amazon.com/api/devices-v2/device
+
+{
+	"devices": [{
+		"accountName": "Jeromeyang's Echo Plus",
+		"appDeviceList": [],
+		"capabilities": ["REMINDERS", "SET_LOCALE", "FAR_FIELD_WAKE_WORD", "CHANGE_NAME", "POPTART", "VOLUME_SETTING", "SOUND_SETTINGS", "DEREGISTER_FACTORY_RESET", "GOLDFISH", "PERSISTENT_CONNECTION", "SUPPORTS_CONNECTED_HOME_CLOUD_ONLY", "KINDLE_BOOKS", "EARCONS", "DREAM_TRAINING", "PAIR_BT_SINK", "DEREGISTER_DEVICE", "I_HEART_RADIO", "ACTIVE_AFTER_FRO", "SLEEP", "AUDIO_PLAYER", "REQUIRES_OOBE_FOR_SETUP", "LEMUR_ALPHA", "VOICE_TRAINING", "UPDATE_WIFI", "FLASH_BRIEFING", "CUSTOM_ALARM_TONE", "TIMERS_AND_ALARMS", "SUPPORTS_SOFTWARE_VERSION", "AMAZON_MUSIC", "ASCENDING_ALARM_VOLUME", "TUNE_IN", "PANDORA", "MICROPHONE", "PAIR_BT_SOURCE", "PAIR_REMOTE", "AUDIBLE", "SALMON"],
+		"charging": null,
+		"clusterMembers": [],
+		"deviceAccountId": "A88C8F9RF8GI",
+		"deviceFamily": "ECHO",
+		"deviceOwnerCustomerId": "A1RJG2SWBS40DW",
+		"deviceType": "A2M35JJZWCQOMZ",
+		"deviceTypeFriendlyName": null,
+		"essid": null,
+		"language": null,
+		"macAddress": null,
+		"online": false,
+		"parentClusters": [],
+		"postalCode": null,
+		"registrationId": null,
+		"remainingBatteryLevel": null,
+		"serialNumber": "G090LA097477096J",
+		"softwareVersion": "611498620"
+	}, {
+		"accountName": "Jeromeyang's Sugr Cube",
+		"appDeviceList": [],
+		"capabilities": ["REMINDERS", "AUDIO_PLAYER", "CHANGE_NAME", "VOLUME_SETTING", "SOUND_SETTINGS", "GOLDFISH", "CUSTOM_ALARM_TONE", "TIMERS_AND_ALARMS", "AMAZON_MUSIC", "TUNE_IN", "SUPPORTS_CONNECTED_HOME_CLOUD_ONLY", "PERSISTENT_CONNECTION", "MICROPHONE", "KINDLE_BOOKS", "DREAM_TRAINING", "PAIR_BT_SINK", "DEREGISTER_DEVICE", "I_HEART_RADIO", "AUDIBLE", "SLEEP"],
+		"charging": null,
+		"clusterMembers": [],
+		"deviceAccountId": "AGVG1J5OZZ45Q",
+		"deviceFamily": "UNKNOWN",
+		"deviceOwnerCustomerId": "A1RJG2SWBS40DW",
+		"deviceType": "A1OD6FBKU4MCS1",
+		"deviceTypeFriendlyName": "Sugr Cube",
+		"essid": null,
+		"language": null,
+		"macAddress": null,
+		"online": false,
+		"parentClusters": [],
+		"postalCode": null,
+		"registrationId": null,
+		"remainingBatteryLevel": null,
+		"serialNumber": "a4a41c1e50b242f0b72b6b9894dd0731",
+		"softwareVersion": "0"
+	}, {
+		"accountName": "Jeromeyang's 2nd SugrDev",
+		"appDeviceList": [],
+		"capabilities": ["REMINDERS", "AUDIO_PLAYER", "CHANGE_NAME", "VOLUME_SETTING", "SOUND_SETTINGS", "GOLDFISH", "CUSTOM_ALARM_TONE", "TIMERS_AND_ALARMS", "AMAZON_MUSIC", "TUNE_IN", "SUPPORTS_CONNECTED_HOME_CLOUD_ONLY", "PERSISTENT_CONNECTION", "MICROPHONE", "KINDLE_BOOKS", "DREAM_TRAINING", "DEREGISTER_DEVICE", "I_HEART_RADIO", "AUDIBLE", "SLEEP"],
+		"charging": null,
+		"clusterMembers": [],
+		"deviceAccountId": "A10135303NQP1BFGTYDR0",
+		"deviceFamily": "UNKNOWN",
+		"deviceOwnerCustomerId": "A1RJG2SWBS40DW",
+		"deviceType": "A35R3HY4IE7S98",
+		"deviceTypeFriendlyName": "SugrDev",
+		"essid": null,
+		"language": null,
+		"macAddress": null,
+		"online": false,
+		"parentClusters": [],
+		"postalCode": null,
+		"registrationId": null,
+		"remainingBatteryLevel": null,
+		"serialNumber": "ad9ef0ca8639497c9ffa5d5842053700",
+		"softwareVersion": "6"
+	}, {
+		"accountName": "Jeromeyang's Eufy Genie",
+		"appDeviceList": [],
+		"capabilities": ["REMINDERS", "AUDIO_PLAYER", "CHANGE_NAME", "VOLUME_SETTING", "GOLDFISH", "AMAZON_MUSIC", "TIMERS_AND_ALARMS", "PEONY", "TUNE_IN", "SUPPORTS_CONNECTED_HOME_CLOUD_ONLY", "PERSISTENT_CONNECTION", "MICROPHONE", "KINDLE_BOOKS", "DREAM_TRAINING", "DEREGISTER_DEVICE", "I_HEART_RADIO", "AUDIBLE", "SLEEP"],
+		"charging": null,
+		"clusterMembers": [],
+		"deviceAccountId": "ATL6TGJFCY3V6",
+		"deviceFamily": "THIRD_PARTY_AVS_MEDIA_DISPLAY",
+		"deviceOwnerCustomerId": "A1RJG2SWBS40DW",
+		"deviceType": "A26TRKU1GG059T",
+		"deviceTypeFriendlyName": "Eufy Genie",
+		"essid": null,
+		"language": null,
+		"macAddress": null,
+		"online": false,
+		"parentClusters": [],
+		"postalCode": null,
+		"registrationId": null,
+		"remainingBatteryLevel": null,
+		"serialNumber": "5ba88cef55154b7388a44060c9d11b39",
+		"softwareVersion": "20180326"
+	}]
+}
+
+5.所有该账号的活动
+https://alexa.amazon.com/api/activities?startTime=&size=50&offset=-1
+    {
+		"_disambiguationId": null,
+		"activityStatus": "DISCARDED_NON_DEVICE_DIRECTED_INTENT",
+		"creationTimestamp": 1536215190852,
+		"description": "{\"summary\":\"\",\"firstUtteranceId\":\"Alexa3P:1.0/2018/09/06/06/a4a41c1e50b242f0b72b6b9894dd0731/26:30::TNIH_2V.2c3e2872-807f-4302-881e-6a2fdf3ad782ZXV/0\",\"firstStreamId\":\"Alexa3P:1.0/2018/09/06/06/a4a41c1e50b242f0b72b6b9894dd0731/26:30::TNIH_2V.2c3e2872-807f-4302-881e-6a2fdf3ad782ZXV\"}",
+		"domainAttributes": null,
+		"domainType": null,
+		"feedbackAttributes": null,
+		"id": "A1RJG2SWBS40DW#1536215190852#A1OD6FBKU4MCS1#a4a41c1e50b242f0b72b6b9894dd0731",
+		"intentType": null,
+		"providerInfoDescription": null,
+		"registeredCustomerId": "A1RJG2SWBS40DW",
+		"sourceActiveUsers": null,
+		"sourceDeviceIds": [{
+			"deviceAccountId": null,
+			"deviceType": "A1OD6FBKU4MCS1",
+			"serialNumber": "a4a41c1e50b242f0b72b6b9894dd0731"
+		}],
+		"utteranceId": "Alexa3P:1.0/2018/09/06/06/a4a41c1e50b242f0b72b6b9894dd0731/26:30::TNIH_2V.2c3e2872-807f-4302-881e-6a2fdf3ad782ZXV",
+		"version": 1
+	}
+
+    {
+		"_disambiguationId": null,
+		"activityStatus": "SUCCESS",
+		"creationTimestamp": 1536073387478,
+		"description": "{\"summary\":\"continue\",\"firstUtteranceId\":\"Vox:1.0/2018/09/04/15/F726E7C7E590418F87BD0C1426CF585D/03:05::TNIH_2V.70a6c88a-4e46-4320-97b8-dd9e6e9d6b62ZXV/1\",\"firstStreamId\":\"Vox:1.0/2018/09/04/15/F726E7C7E590418F87BD0C1426CF585D/03:05::TNIH_2V.70a6c88a-4e46-4320-97b8-dd9e6e9d6b62ZXV\"}",
+		"domainAttributes": null,
+		"domainType": null,
+		"feedbackAttributes": null,
+		"id": "A1RJG2SWBS40DW#1536073387478#A2IVLV5VM2W81#F726E7C7E590418F87BD0C1426CF585D",
+		"intentType": null,
+		"providerInfoDescription": null,
+		"registeredCustomerId": "A1RJG2SWBS40DW",
+		"sourceActiveUsers": null,
+		"sourceDeviceIds": [{
+			"deviceAccountId": null,
+			"deviceType": "A2IVLV5VM2W81",
+			"serialNumber": "F726E7C7E590418F87BD0C1426CF585D"
+		}],
+		"utteranceId": "Vox:1.0/2018/09/04/15/F726E7C7E590418F87BD0C1426CF585D/03:05::TNIH_2V.70a6c88a-4e46-4320-97b8-dd9e6e9d6b62ZXV",
+		"version": 1
+	}, {
+		"_disambiguationId": null,
+		"activityStatus": "DISCARDED_NON_DEVICE_DIRECTED_INTENT",
+		"creationTimestamp": 1536073386176,
+		"description": "{\"summary\":\"\",\"firstUtteranceId\":\"Vox:1.0/2018/09/04/15/F726E7C7E590418F87BD0C1426CF585D/03:05::TNIH_2V.70a6c88a-4e46-4320-97b8-dd9e6e9d6b62ZXV/0\",\"firstStreamId\":\"Vox:1.0/2018/09/04/15/F726E7C7E590418F87BD0C1426CF585D/03:05::TNIH_2V.70a6c88a-4e46-4320-97b8-dd9e6e9d6b62ZXV\"}",
+		"domainAttributes": null,
+		"domainType": null,
+		"feedbackAttributes": null,
+		"id": "A1RJG2SWBS40DW#1536073386176#A2IVLV5VM2W81#F726E7C7E590418F87BD0C1426CF585D",
+		"intentType": null,
+		"providerInfoDescription": null,
+		"registeredCustomerId": "A1RJG2SWBS40DW",
+		"sourceActiveUsers": null,
+		"sourceDeviceIds": [{
+			"deviceAccountId": null,
+			"deviceType": "A2IVLV5VM2W81",
+			"serialNumber": "F726E7C7E590418F87BD0C1426CF585D"
+		}],
+		"utteranceId": "Vox:1.0/2018/09/04/15/F726E7C7E590418F87BD0C1426CF585D/03:05::TNIH_2V.70a6c88a-4e46-4320-97b8-dd9e6e9d6b62ZXV",
+		"version": 1
+	}

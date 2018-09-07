@@ -46,9 +46,11 @@ let emailer = {
             }
             console.log('Message sent: %s', info.messageId);
         })
+    },
+
+    send: function (to, subject, text) {
+        send(to,subject,text,null)
     }
-
-
 }
 
 module.exports = emailer

@@ -6,21 +6,78 @@
   <link rel="stylesheet" href="assets/css/variables.css">
   <link rel="stylesheet" href="assets/css/global.css">
   <link rel="stylesheet" href="assets/css/nav.css">
+  <link rel="stylesheet" href="./assets/layui/css/layui.css">
+
   <link rel="import" href="sections/sugr/console.html">
 
-  <link rel="stylesheet" href="assets/layui/css/layui.css">
 </head>
 <body>
 
+
+
+
+
   <nav class="nav js-nav">
     <header class="nav-header">
-      <button class="layui-btn" > 开始 </button>
+      <button class="layui-btn" id="start"> 开始 </button>
       <button class="layui-btn" id="alexa-login"> 登陆 </button>
+
+      <form class="layui-form" action="" style="float: right;margin-right: 0px">
+        <div class="layui-form-item">
+          <label class="layui-form-label">是否受控</label>
+          <div style="margin-left:110px;min-height:36px">
+            <input type="radio" name="mode" value="0" title="是" checked>
+            <input type="radio" name="mode" value="0" title="否" checked>
+          </div>
+        </div>
+      </form>
+
+
     </header>
 
 
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">语言:&nbsp&nbsp</label>
+        <div class="layui-input-block">
+          <select name="city" lay-verify="" style="width: 120px">
+            <option value="010">英语</option>
+            <option value="021">法语</option>
+            <option value="0571">西班牙</option>
+          </select>
+        </div>
+      </div>
+    </form>
 
 
+
+      <form class="layui-form" action="">
+        <div class="layui-form-item">
+          <label class="layui-form-label">场景:&nbsp&nbsp</label>
+          <div class="layui-input-block">
+            <input type="checkbox" name="" title="silence" lay-skin="primary" checked>
+            <input type="checkbox" name="" title="kitchen" lay-skin="primary" checked>
+            <input type="checkbox" name="" title="music" lay-skin="primary" checked>
+            <input type="checkbox" name="" title="playback" lay-skin="primary" checked>
+          </div>
+        </div>
+      </form>
+
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">位置:&nbsp&nbsp</label>
+        <div class="layui-input-block">
+          <div class="layui-input-block">
+            <input type="radio" name="mode" value="0" title="990" checked>
+            <input type="radio" name="mode" value="0" title="930" checked>
+            <input type="radio" name="mode" value="0" title="330" checked>
+            <input type="radio" name="mode" value="0" title="390" checked>
+
+
+          </div>
+        </div>
+      </div>
+    </form>
 
   </nav>
 
@@ -30,9 +87,13 @@
   <script>
     require('./assets/imports')
     require('./assets/nav')
-    require('./sugr/index')
+    require('./renderer-process/sugr/index')
   </script>
+  <script>
 
+
+
+  </script>
 <script>
 
 </script>

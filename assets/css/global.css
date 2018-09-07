@@ -11,7 +11,7 @@
 /* Global ---------------------------- */
 
 * {
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
 }
 
 html {
@@ -140,7 +140,7 @@ kbd {
 .content {
   flex: 1;
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
   visibility: hidden;
   opacity: 0;
 }

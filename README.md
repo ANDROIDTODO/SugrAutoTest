@@ -7,3 +7,5 @@
 * Support for simultaneous control of multiple speakers to play audio.
 * Support excel output test results.
 * Support for sending email with successful or failed test results
+* Support pause resume
+* Support configuration
