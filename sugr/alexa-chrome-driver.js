@@ -23,6 +23,7 @@ browserDriver.openBrowser = async function (url,f) {
 
   try{
     await driver.get(url)
+      f(3)
     console.log('openBrowser1  ')
     driver.getCurrentUrl().then((url1) => {
       console.log('openBrowser1 : ' + url1)

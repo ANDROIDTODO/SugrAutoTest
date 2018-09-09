@@ -22,18 +22,16 @@
       <button class="layui-btn" id="start"> 开始 </button>
       <button class="layui-btn" id="alexa-login"> 登陆 </button>
 
-      <form class="layui-form" action="" style="float: right;margin-right: 0px">
-        <div class="layui-form-item">
-          <label class="layui-form-label">是否受控</label>
-          <div style="margin-left:110px;min-height:36px">
-            <input type="radio" name="mode" value="0" title="是" checked>
-            <input type="radio" name="mode" value="0" title="否" checked>
-          </div>
-        </div>
-      </form>
-
-
     </header>
+
+    <form class="layui-form" action="" >
+      <div class="layui-form-item">
+        <label class="layui-form-label">是否受控:&nbsp&nbsp</label>
+        <div class="layui-input-block">
+        <input  type="checkbox" name="controller" lay-skin="switch" lay-text="开启|关闭">
+        </div>
+      </div>
+    </form>
 
 
     <form class="layui-form" action="">
@@ -55,10 +53,10 @@
         <div class="layui-form-item">
           <label class="layui-form-label">场景:&nbsp&nbsp</label>
           <div class="layui-input-block">
-            <input type="checkbox" name="" title="silence" lay-skin="primary" checked>
-            <input type="checkbox" name="" title="kitchen" lay-skin="primary" checked>
-            <input type="checkbox" name="" title="music" lay-skin="primary" checked>
-            <input type="checkbox" name="" title="playback" lay-skin="primary" checked>
+            <input id="sense_silence_cb" type="checkbox" name="" title="silence" lay-skin="primary" checked>
+            <input id="sense_kitchen_cb" type="checkbox" name="" title="kitchen" lay-skin="primary" checked>
+            <input id="sense_music_cb" type="checkbox" name="" title="music" lay-skin="primary" checked>
+            <input id="sense_playback_cb" type="checkbox" name="" title="playback" lay-skin="primary" checked>
           </div>
         </div>
       </form>
@@ -84,12 +82,14 @@
   <main class="content js-content"></main>
 
   <script src="assets/layui/layui.all.js"></script>
+  <script src="assets/jquery/jquery.min.js"></script>
   <script>
     require('./assets/imports')
     require('./assets/nav')
     require('./renderer-process/sugr/index')
   </script>
   <script>
+
 
 
 
