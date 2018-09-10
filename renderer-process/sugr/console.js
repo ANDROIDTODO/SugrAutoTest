@@ -11,6 +11,8 @@ ipcRenderer.on('console-event', (event, level, text) => {
     let time = moment().format('YYYY-MM-DD HH:mm:ss')
     if (level === 'error') {
         append = '<p style="color: red">[' + time + ']: ' + text + '</p>'
+    } else if (level === 'info'){
+        append = '<p style="color: steelblue">[' + time + ']: ' + text + '</p>'
     } else {
         append = '<p>[' + time + ']: ' + text + '</p>'
     }
@@ -25,6 +27,8 @@ ipcRenderer.on('socket-message', (event, level, text) => {
         let append
         if (level === 'error') {
             append = '<p style="color: red">[' + time + ']: ' + text + '</p>'
+        } else if (level === 'info'){
+            append = '<p style="color: steelblue">[' + time + ']: ' + text + '</p>'
         } else {
             append = '<p>[' + time + ']: ' + text + '</p>'
         }
