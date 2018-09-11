@@ -33,7 +33,7 @@ let isDeviceUnderControll = false
 let isLogin = false;
 
 /// *************************IpcMain************************
-ipcMain.on('start-click',(event) => {
+ipcMain.on('alexa-login-click',(event) => {
     browersDriver.openBrowser('https://alexa.amazon.com/',(code,result) => {
         console.log(code)
 
@@ -49,19 +49,29 @@ ipcMain.on('start-click',(event) => {
             event.sender.send('console-event','debug','准备初始化...')
             event.sender.send('console-event','debug','正在获取在线设备信息...')
         }else if (code == 5){ //获取到了device online list
-            // if (result == null){
-            //     event.sender.send('console-event','error','请点击SN 列表选项中的确定刷新在线设备列表')
-            //     return
-            // }
-            event.sender.send('console-event','info',JSON.stringify(result))
+            if (result.length === 0){
+                event.sender.send('console-event','error','当前无在线设备,请点击SN列表选项中的确定刷新在线设备列表')
+                event.sender.send('alexa-no-devices',true)
+            }else {
+              event.sender.send('alexa-no-devices',false)
+              event.sender.send('console-event','info',JSON.stringify(result))
+            }
         }
     })
 })
 
-ipcMain.on('test111',(event) => {
-    browersDriver.getDeviceOnlineList()
+ipcMain.on('start-test-click',(event,data) => {
+
 })
 
+ipcMain.on('refresh-devices-click',(event) => {
+
+})
+
+
+ipcMain.on('confirm-device-sn',(event) => {
+    console.log('confirm-device-sn click')
+})
 
 
 
