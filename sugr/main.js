@@ -69,8 +69,9 @@ ipcMain.on('refresh-devices-click',(event) => {
 })
 
 
-ipcMain.on('confirm-device-sn',(event) => {
+ipcMain.on('confirm-device-sn',(event,sn) => {
     console.log('confirm-device-sn click')
+    deviceSerialNumber = sn
 })
 
 

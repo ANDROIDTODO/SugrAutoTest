@@ -1,115 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
 
-  <link rel="stylesheet" href="assets/css/variables.css">
-  <link rel="stylesheet" href="assets/css/global.css">
-  <link rel="stylesheet" href="assets/css/nav.css">
-  <link rel="stylesheet" href="./assets/layui/css/layui.css">
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/nav.css">
+    <link rel="stylesheet" href="./assets/layui/css/layui.css">
 
-  <link rel="import" href="sections/sugr/console.html">
+    <link rel="import" href="sections/sugr/console.html">
 
 </head>
 <body>
 
 
-
-
-
-  <nav class="nav js-nav">
+<nav class="nav js-nav">
     <header class="nav-header">
-      <button class="layui-btn" id="start"> 开始 </button>
-      <button class="layui-btn" id="alexa-login"> 登陆 </button>
+        <button class="layui-btn" id="start"> 开始</button>
+        <button class="layui-btn" id="alexa-login"> 登陆</button>
 
     </header>
 
-    <form class="layui-form" action="" >
-      <div class="layui-form-item">
-        <label class="layui-form-label">是否受控:&nbsp&nbsp</label>
-        <div class="layui-input-block">
-        <input  type="checkbox" name="controller" lay-skin="switch" lay-text="开启|关闭">
-        </div>
-      </div>
-    </form>
-
-
     <form class="layui-form" action="">
-      <div class="layui-form-item">
-        <label class="layui-form-label">语言:&nbsp&nbsp</label>
-        <div class="layui-input-block">
-          <select id="language" name="language" lay-verify="" style="width: 120px">
-            <option value="en">英语</option>
-            <option value="de">德语</option>
-            <option value="spa">西班牙</option>
-          </select>
-        </div>
-      </div>
-    </form>
-
-
-
-      <form class="layui-form" action="">
         <div class="layui-form-item">
-          <label class="layui-form-label">场景:&nbsp&nbsp</label>
-          <div class="layui-input-block">
-            <input id="sense_silence_cb" type="checkbox" name="" title="silence" lay-skin="primary" checked>
-            <input id="sense_kitchen_cb" type="checkbox" name="" title="kitchen" lay-skin="primary" checked>
-            <input id="sense_music_cb" type="checkbox" name="" title="music" lay-skin="primary" checked>
-            <input id="sense_playback_cb" type="checkbox" name="" title="playback" lay-skin="primary" checked>
-          </div>
+            <label class="layui-form-label">是否受控:&nbsp&nbsp</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="controller" lay-skin="switch" lay-text="开启|关闭">
+            </div>
         </div>
-      </form>
-
-    <form class="layui-form" action="">
-      <div class="layui-form-item">
-        <label class="layui-form-label">位置:&nbsp&nbsp</label>
-        <div class="layui-input-block">
-          <div class="layui-input-block">
-            <input type="radio" name="position" value="990" title="990" checked>
-            <input type="radio" name="position" value="930" title="930" >
-            <input type="radio" name="position" value="330" title="330" >
-            <input type="radio" name="position" value="390" title="390" >
-
-
-          </div>
-        </div>
-      </div>
     </form>
 
 
     <form class="layui-form" action="">
-      <div class="layui-form-item">
-        <label class="layui-form-label">SN:&nbsp&nbsp</label>
-        <div class="layui-input-block">
-          <div class="layui-input-block" style="display: inline-flex;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">语言:&nbsp&nbsp</label>
+            <div class="layui-input-block">
+                <select id="language" name="language" lay-verify="" style="width: 120px">
+                    <option value="en">英语</option>
+                    <option value="de">德语</option>
+                    <option value="spa">西班牙</option>
+                </select>
+            </div>
+        </div>
+    </form>
 
-            <input id="serialNumber" type="text" name="serialNumber" lay-verify="required" style="width: 230px;font-size: 10px"
+
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">场景:&nbsp&nbsp</label>
+            <div class="layui-input-block">
+                <input id="sense_silence_cb" type="checkbox" name="" title="silence" lay-skin="primary" checked>
+                <input id="sense_kitchen_cb" type="checkbox" name="" title="kitchen" lay-skin="primary" checked>
+                <input id="sense_music_cb" type="checkbox" name="" title="music" lay-skin="primary" checked>
+                <input id="sense_playback_cb" type="checkbox" name="" title="playback" lay-skin="primary" checked>
+            </div>
+        </div>
+    </form>
+
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">位置:&nbsp&nbsp</label>
+            <div class="layui-input-block">
+                <div class="layui-input-block">
+                    <input type="radio" name="position" value="990" title="990" checked>
+                    <input type="radio" name="position" value="930" title="930">
+                    <input type="radio" name="position" value="330" title="330">
+                    <input type="radio" name="position" value="390" title="390">
+
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <label class="layui-form-label">SN:&nbsp&nbsp</label>
+    <div class="layui-input-block">
+        <div class="layui-input-block" style="display: inline-flex;">
+
+            <input id="serialNumber" type="text" name="serialNumber" lay-verify="required"
+                   style="width: 230px;font-size: 10px"
                    placeholder="请登录后填写控制台输出的serialNumber" autocomplete="off" class="layui-input">
-            <button class="layui-btn layui-btn-disabled" id="sn-confirm" > 确定 </button>
-          </div>
+            <button class="layui-btn layui-btn-disabled" disabled id="sn-confirm"> 确定</button>
         </div>
-      </div>
-    </form>
+    </div>
 
 
-  </nav>
+</nav>
 
-  <main class="content js-content"></main>
+<main class="content js-content"></main>
 
-  <script src="assets/layui/layui.all.js"></script>
-  <script src="assets/jquery/jquery.min.js"></script>
-  <script>
+<script src="assets/layui/layui.all.js"></script>
+<script src="assets/jquery/jquery.min.js"></script>
+<script>
     require('./assets/imports')
     require('./assets/nav')
     require('./renderer-process/sugr/index')
-  </script>
-  <script>
+</script>
+<script>
 
 
-
-
-  </script>
+</script>
 <script>
 
 </script>
