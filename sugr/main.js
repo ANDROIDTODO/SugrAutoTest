@@ -2,7 +2,7 @@
 // 与界面通信通过IPC
 // 规则流程:  1.点击开始后,判断选择的状态,若有错误给出提示后重新选择,若无则将根据选择播放第一条的语料
 //登录的账号密码可以写在config中
-const {ipcMain} = require('electron')
+const {ipcMain,dialog} = require('electron')
 
 //播报控件
 const player = require('./audio-speak')
@@ -74,7 +74,7 @@ ipcMain.on('alexa-login-click',(event) => {
 ipcMain.on('start-test-click',(event,data) => {
 
     if (deviceSerialNumber == null || deviceSerialNumber == ''){
-        event.sender.send('show-error-dialog', '错误', '请填写有效完整的序列号后确认！再点击开始')
+        dialog.showErrorBox('错误', '请填写有效完整的序列号后确认！再点击开始')
     }else {
         //根据sn获取当前最新的card的creationTimestamp
         browersDriver.getCardList((_data) => {
