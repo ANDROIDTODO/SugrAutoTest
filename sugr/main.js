@@ -32,6 +32,14 @@ let isDeviceUnderControll = false
 
 let isLogin = false;
 
+let todolistId
+
+let lastestCardCreateTime
+
+let lastestHistoryCreateTime
+
+let lastestTodoItemCreateTime
+
 /// *************************IpcMain************************
 ipcMain.on('alexa-login-click',(event) => {
     browersDriver.openBrowser('https://alexa.amazon.com/',(code,result) => {
@@ -56,11 +64,26 @@ ipcMain.on('alexa-login-click',(event) => {
               event.sender.send('alexa-no-devices',false)
               event.sender.send('console-event','info',JSON.stringify(result))
             }
+        }else if (code == 6){
+            todolistId = result
+
         }
     })
 })
 
 ipcMain.on('start-test-click',(event,data) => {
+
+    if (deviceSerialNumber == null || deviceSerialNumber == ''){
+        event.sender.send('show-error-dialog', '错误', '请填写有效完整的序列号后确认！再点击开始')
+    }else {
+        //根据sn获取当前最新的card的creationTimestamp
+        browersDriver.getCardList((_data) => {
+            parseCardData(_data,event)
+        })
+        // 获取当前itemId最近一个的todo item（updatedDateTime，value）
+        // 获取history中最近的一个item （creationTimestamp） //是否被唤醒
+    }
+
 
 })
 
@@ -79,17 +102,52 @@ ipcMain.on('confirm-device-sn',(event,sn) => {
 /// *************************IpcMain************************
 
 
+function parseCardData(_data,event) {
+    let data = JSON.parse(_data)
+    let cards = data.cards
+    if (cards.length > 0){
+        try{
+            cards.forEach(v => {
+                if (v.sourceDevice.serialNumber == deviceSerialNumber) {
+                    let heard
+                    let answer
+                    let createTime
+                    let serialNumber
 
 
 
 
+                    if(v.playbackAudioAction != null){
+                        heard = v.playbackAudioAction.mainText
+                    }
+                    answer = v.descriptiveText[0]
+                    createTime = v.creationTimestamp
+                    serialNumber = v.sourceDevice.serialNumber
 
-let sugrtestMain = {
+                    let _card = {
+                        heard,
+                        answer,
+                        createTime,
+                        serialNumber
+                    }
+                    console.log(_card)
+                    event.sender.send('console-event','info',JSON.stringify(_card))
+                    throw new Error('break')
+                }
 
-    init: function () {
+            })
+        }catch (e){
+            console.log(e.message)
+        }
+
 
 
     }
 }
+
+
+
+
+
 
 

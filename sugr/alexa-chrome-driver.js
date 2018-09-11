@@ -12,7 +12,7 @@ const URL_HISTORY = 'https://alexa.amazon.com/api/activities?startTime=&size=50&
 let driver = null
 let window = null
 let chromeOptions = null
-let alexaListId
+
 
 // 我们需要给出算法库的版本等等
 
@@ -49,11 +49,11 @@ browserDriver.openBrowser = async function (url, f) {
             //自动填充亚马逊账号及自动登录
             driver.findElement(By.id('ap_email'))
                 .then((found) => {
-                    found.sendKeys('sugr@sugrsugr.com')
+                    found.sendKeys('jeromeyang@sugrsugr.com')
                         .then(() => {
                             driver.findElement(By.id('ap_password'))
                                 .then((found) => {
-                                    found.sendKeys('Sugr140331')
+                                    found.sendKeys('jeromeyang520@')
                                         .then(() => {
                                             driver.findElement(By.id('signInSubmit'))
                                                 .then((found) => {
@@ -76,13 +76,12 @@ browserDriver.openBrowser = async function (url, f) {
         f(4, null)
         // 获取当前在线的设备，并选择序列号
         // 获取当前序列号的itemId
-        // 获取当前itemId最近一个的todo item（updatedDateTime，value）
-        // 获取history中最近的一个item （creationTimestamp） //是否被唤醒
         browserDriver.getDeviceOnlineList(function (result) {
             f(5, result)
             browserDriver.getNameList(function (_itemId) {
-                alexaListId = _itemId
-                console.log('TODO-LIST Id:' + alexaListId)
+
+                console.log('TODO-LIST Id:' + _itemId)
+                f(6,_itemId)
             })
         })
 
@@ -144,9 +143,9 @@ browserDriver.getNameList = async(f) => {
     })
 }
 
-browserDriver.getTODOList = async(f) => {
+browserDriver.getTODOList = async(listId,f) => {
     if (alexaListId!=null){
-        browserDriver.getAlexaApi(URL_NAME_LIST+'/'+alexaListId+'/items',function (_body) {
+        browserDriver.getAlexaApi(URL_NAME_LIST+'/'+listId+'/items',function (_body) {
 
         })
     }

@@ -1,7 +1,10 @@
 1.获取card信息，登录之后就能拿到
 https://alexa.amazon.com/api/cards
 
-
+heard: playbackAudioAction.mainText
+answer: descriptiveText[0]
+time: creationTimestamp
+sn: sourceDevice.serialNumber
 
 
 
