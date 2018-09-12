@@ -9,3 +9,5 @@
 * Support for sending email with successful or failed test results
 * Support pause resume
 * Support configuration
+* Support code input in the app
+* Support device choice int the app & click wake up button to find which one

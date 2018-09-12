@@ -12,7 +12,7 @@ const {app, BrowserWindow} = require('electron')
 const net = require('net')
 const socketm = require(path.join(__dirname, 'sugr/socketmanager.js'))
 
-if (process.mas) app.setName('Electron APIs')
+if (process.mas) app.setName('Sugr Alexa')
 const debug = /--debug/.test(process.argv[2])
 
 let mainWindow = null
@@ -64,6 +64,10 @@ function initialize() {
 
         if (process.platform === 'linux') {
             windowOptions.icon = path.join(__dirname, '/assets/app-icon/png/512.png')
+        }
+
+        if (process.platform === 'windows'){
+
         }
 
         mainWindow = new BrowserWindow(windowOptions)

@@ -31,7 +31,18 @@ browserDriver.openBrowser = async function (url, f) {
     if (driver != null) {
         return
     }
-    driver = await new Builder().forBrowser('chrome').build()
+
+    _chromeOption = new chrome.Options()
+    // _chromeOption.addArguments('--disable-gpu')
+    _chromeOption.addArguments('--hide-scrollbars')
+    _chromeOption.addArguments('blink-settings=imagesEnabled=false')
+
+    _chromeOption.addArguments('–disable-javascript ')
+    _chromeOption.addArguments('–disable-plugins')
+
+    driver = await new Builder().forBrowser('chrome')
+        .setChromeOptions(_chromeOption)
+        .build()
     chromeOptions = driver.chromeOptions
 
     window = driver.manage().window()
@@ -75,25 +86,6 @@ browserDriver.openBrowser = async function (url, f) {
 
 
 
-        // let _z = false
-        // while (!_z){
-        //     try {
-        //         await driver.wait(until.titleIs('Amazon Alexa'),2000)
-        //
-        //     }catch (e){
-        //         console.log(e)
-        //     }
-        //
-        //     let title = driver.getTitle()
-        //
-        //
-        //
-        //     if (title == 'Amazon Alexa'){
-        //         _z = true
-        //     }else if (title == 'Please confirm your identity'){
-        //         f(8,null)
-        //     }
-        // }
         try{
             await driver.wait(until.titleIs('Please confirm your identity'),20000)
             f(8,null)
@@ -112,14 +104,16 @@ browserDriver.openBrowser = async function (url, f) {
         f(4, null)
         // 获取当前在线的设备，并选择序列号
         // 获取当前序列号的itemId
-        browserDriver.getDeviceOnlineList(function (result) {
-            f(5, result)
-            browserDriver.getNameList(function (_itemId) {
+        browserDriver.getNameList(function (_itemId) {
 
-                console.log('TODO-LIST Id:' + _itemId)
-                f(6,_itemId)
+            console.log('TODO-LIST Id:' + _itemId)
+            f(6,_itemId)
+            browserDriver.getDeviceOnlineList(function (result) {
+                f(5, result)
+
             })
         })
+
 
 
         await driver.wait(until.titleIs('xxxxxx'))
@@ -180,9 +174,9 @@ browserDriver.getNameList = async(f) => {
 }
 
 browserDriver.getTODOList = async(listId,f) => {
-    if (alexaListId!=null){
+    if (listId!=null){
         browserDriver.getAlexaApi(URL_NAME_LIST+'/'+listId+'/items',function (_body) {
-
+            f(_body)
         })
     }
 }
@@ -219,7 +213,7 @@ browserDriver.getAlexaApi = async(url,f) => {
 
     await driver.findElement(By.css('body')).then(function (found) {
         found.getText().then(function (_body) {
-            console.log(_body)
+            // console.log(_body)
             f(_body)
 
         })

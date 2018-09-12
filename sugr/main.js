@@ -34,11 +34,11 @@ let isLogin = false;
 
 let todolistId
 
-let lastestCardCreateTime
+let lastestCardCreateTime = -1
 
-let lastestHistoryCreateTime
+let lastestHistoryCreateTime = -1
 
-let lastestTodoItemCreateTime
+let lastestTodoItemCreateTime = -1
 
 /// *************************IpcMain************************
 ipcMain.on('alexa-login-click',(event) => {
@@ -62,11 +62,11 @@ ipcMain.on('alexa-login-click',(event) => {
                 event.sender.send('alexa-no-devices',true)
             }else {
               event.sender.send('alexa-no-devices',false)
-              event.sender.send('console-event','info',JSON.stringify(result))
+              event.sender.send('console-event','info',JSON.stringify(result,null,'\t'))
             }
         }else if (code == 6){
             todolistId = result
-
+            console.log('todolistId:'+todolistId)
         }else if (code == 7){
             event.sender.send('console-event','debug','正在登录...')
         }else if (code == 8){
@@ -83,8 +83,16 @@ ipcMain.on('start-test-click',(event,data) => {
         //根据sn获取当前最新的card的creationTimestamp
         browersDriver.getCardList((_data) => {
             parseCardData(_data,event)
+            // 获取当前itemId最近一个的todo item（updatedDateTime，value）
+            browersDriver.getTODOList(todolistId,(_data) => {
+                parseTodoList(_data,event)
+                browersDriver.getHistory(_data => {
+                    parseHistory(_data,event)
+                })
+            })
         })
-        // 获取当前itemId最近一个的todo item（updatedDateTime，value）
+
+
         // 获取history中最近的一个item （creationTimestamp） //是否被唤醒
     }
 
@@ -99,6 +107,7 @@ ipcMain.on('refresh-devices-click',(event) => {
 ipcMain.on('confirm-device-sn',(event,sn) => {
     console.log('confirm-device-sn click')
     deviceSerialNumber = sn
+    console.log("deviceSerialNumber:"+deviceSerialNumber)
 })
 
 
@@ -112,28 +121,35 @@ function parseCardData(_data,event) {
     if (cards.length > 0){
         try{
             cards.forEach(v => {
+                console.log('test1')
+                //TODO 若没有发现则取第一个作为基准
                 if (v.sourceDevice.serialNumber == deviceSerialNumber) {
                     let heard
-                    let answer
-                    let createTime
+                    let answer = ''
+                    let time
                     let serialNumber
-
-
-
+                    console.log('test2')
 
                     if(v.playbackAudioAction != null){
                         heard = v.playbackAudioAction.mainText
                     }
-                    answer = v.descriptiveText[0]
-                    createTime = v.creationTimestamp
+                    console.log('test3')
+
+                    if(v.descriptiveText!=null){
+                        answer = v.descriptiveText[0]
+                    }
+                    time = v.creationTimestamp
                     serialNumber = v.sourceDevice.serialNumber
+                    console.log('test4')
 
                     let _card = {
                         heard,
                         answer,
-                        createTime,
+                        time,
                         serialNumber
                     }
+                    console.log('test5')
+
                     console.log(_card)
                     event.sender.send('console-event','info',JSON.stringify(_card))
                     throw new Error('break')
@@ -144,11 +160,71 @@ function parseCardData(_data,event) {
             console.log(e.message)
         }
 
-
-
     }
 }
 
+function parseTodoList(_data,event) {
+    let data = JSON.parse(_data)
+    let list = data.list
+
+
+    if (list.length > 0){
+
+        let time = list[0].createdDateTime
+        let value = list[0].value
+
+        let _todo = {
+            value,
+            time
+        }
+
+        console.log(_todo)
+        event.sender.send('console-event','info',JSON.stringify(_todo))
+    }
+}
+
+function parseHistory(_data,event) {
+    let data = JSON.parse(_data)
+    let activities = data.activities
+
+
+    if (activities.length > 0){
+
+        if(lastestHistoryCreateTime == -1){ //只需要获取第一个
+            let time = ''
+            let serialNumber = ''
+            let summary = ''
+            let toDoId = ''
+            let value = ''
+
+            time = activities[0].creationTimestamp
+            serialNumber = activities[0].sourceDeviceIds[0].serialNumber
+            summary = activities[0].description.summary
+
+            if(activities[0].domainAttributes != null){
+                try {
+                    toDoId = activities[0].domainAttributes.toDoId
+                    value = activities[0].domainAttributes.value
+                }catch (e){
+
+                }
+            }
+
+            let _history = {
+                time,
+                serialNumber,
+                summary,
+                toDoId,
+                value
+            }
+
+            event.sender.send('console-event','info',JSON.stringify(_history))
+        }else { //需要将所有大于当前时间值的存储下来
+
+        }
+        // event.sender.send('console-event','info',JSON.stringify(_todo))
+    }
+}
 
 
 

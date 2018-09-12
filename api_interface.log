@@ -210,5 +210,10 @@ https://alexa.amazon.com/api/activities?startTime=&size=50&offset=-1
 	}
 
 
+    查看有没有添加todolist
+	domainAttributes.value
+	domainAttributes.toDoId
+
+
 	https://www.amazon.com/ap/signin?ie=UTF8&arb=feb04dc9-c062-4a34-b478-6c27708fb02b&cvfcct=38ff05a7-650e-438f-b810-a5aa78729c93
 	https://www.amazon.com/ap/cvf/request
