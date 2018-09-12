@@ -67,6 +67,10 @@ ipcMain.on('alexa-login-click',(event) => {
         }else if (code == 6){
             todolistId = result
 
+        }else if (code == 7){
+            event.sender.send('console-event','debug','正在登录...')
+        }else if (code == 8){
+            event.sender.send('console-event','debug','请在网页中输入验证码！！！')
         }
     })
 })

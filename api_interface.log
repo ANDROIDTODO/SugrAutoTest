@@ -208,3 +208,7 @@ https://alexa.amazon.com/api/activities?startTime=&size=50&offset=-1
 		"utteranceId": "Vox:1.0/2018/09/04/15/F726E7C7E590418F87BD0C1426CF585D/03:05::TNIH_2V.70a6c88a-4e46-4320-97b8-dd9e6e9d6b62ZXV",
 		"version": 1
 	}
+
+
+	https://www.amazon.com/ap/signin?ie=UTF8&arb=feb04dc9-c062-4a34-b478-6c27708fb02b&cvfcct=38ff05a7-650e-438f-b810-a5aa78729c93
+	https://www.amazon.com/ap/cvf/request

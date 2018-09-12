@@ -36,7 +36,7 @@ browserDriver.openBrowser = async function (url, f) {
         await driver.get(url)
         f(3, null)
         console.log('openBrowser1  ')
-        driver.getCurrentUrl().then((realUrl) => {
+        await driver.getCurrentUrl().then((realUrl) => {
             console.log('openBrowser1 : ' + realUrl)
             if (realUrl == url) {
                 driver.sleep(2000).then(() => {
@@ -58,6 +58,7 @@ browserDriver.openBrowser = async function (url, f) {
                                             driver.findElement(By.id('signInSubmit'))
                                                 .then((found) => {
                                                     found.submit()
+                                                    f(7,null)
                                                 })
                                         })
                                 })
@@ -65,6 +66,36 @@ browserDriver.openBrowser = async function (url, f) {
 
                 })
         })
+
+
+
+
+        // let _z = false
+        // while (!_z){
+        //     try {
+        //         await driver.wait(until.titleIs('Amazon Alexa'),2000)
+        //
+        //     }catch (e){
+        //         console.log(e)
+        //     }
+        //
+        //     let title = driver.getTitle()
+        //
+        //
+        //
+        //     if (title == 'Amazon Alexa'){
+        //         _z = true
+        //     }else if (title == 'Please confirm your identity'){
+        //         f(8,null)
+        //     }
+        // }
+        try{
+            await driver.wait(until.titleIs('Please confirm your identity'),20000)
+            f(8,null)
+        }catch (E){
+
+        }
+
 
         await driver.wait(until.titleIs('Amazon Alexa'))
         console.log('current title is Amazon alexa')
