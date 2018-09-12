@@ -3,6 +3,11 @@
  */
 
 const {Builder, By, Key, until} = require('selenium-webdriver')
+const chrome = require('selenium-webdriver/chrome')
+const chromedriver = require('chromedriver')
+
+chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build())
+
 
 const URL_DEVICE_LIST = 'https://alexa.amazon.com/api/devices-v2/device'
 const URL_NAME_LIST = 'https://alexa.amazon.com/api/namedLists'

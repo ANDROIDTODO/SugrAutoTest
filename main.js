@@ -12,7 +12,7 @@ const {app, BrowserWindow} = require('electron')
 const net = require('net')
 const socketm = require(path.join(__dirname, 'sugr/socketmanager.js'))
 
-
+if (process.mas) app.setName('Electron APIs')
 const debug = /--debug/.test(process.argv[2])
 
 let mainWindow = null
