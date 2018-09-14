@@ -55,7 +55,6 @@ function initialize() {
 
     function createWindow() {
         const windowOptions = {
-            frame: true,
             width: 1080,
             minWidth: 680,
             height: 840,

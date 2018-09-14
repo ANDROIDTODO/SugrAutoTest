@@ -3,7 +3,7 @@
 // 规则流程:  1.点击开始后,判断选择的状态,若有错误给出提示后重新选择,若无则将根据选择播放第一条的语料
 //登录的账号密码可以写在config中
 const {ipcMain,dialog} = require('electron')
-
+const path = require('path')
 //播报控件
 const player = require('./audio-speak')
 //邮件控件
@@ -11,6 +11,11 @@ const emailer = require('./emails-service')
 //浏览器driver
 const browersDriver = require('./alexa-chrome-driver')
 
+console.log(browersDriver.a)
+//xlsx
+const xlsx = require('./excelmanager')
+let xlsxPath = path.join(__dirname,'../assets/config/sat_config.xlsx');
+xlsx.initialize(xlsxPath,null,null)
 
 
 let currentUtteranceIndex = 0
@@ -77,7 +82,12 @@ ipcMain.on('alexa-login-click',(event) => {
 
 ipcMain.on('start-test-click',(event,data) => {
 
+
+
     if (deviceSerialNumber == null || deviceSerialNumber == ''){
+
+        let xlsxPath1 = path.join(__dirname,'../assets/config/sat_config.xlsx');
+        event.sender.send('console-event','debug',xlsxPath1)
         dialog.showErrorBox('错误', '请填写有效完整的序列号后确认！再点击开始')
     }else {
         //根据sn获取当前最新的card的creationTimestamp

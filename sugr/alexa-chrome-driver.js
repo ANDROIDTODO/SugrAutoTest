@@ -25,6 +25,9 @@ function browserDriver() {
 
 }
 
+browserDriver.ap_email = null
+browserDriver.ap_password = null
+
 //需要返回 当前browers关闭状态,是否登录状态
 browserDriver.openBrowser = async function (url, f) {
 
@@ -39,7 +42,7 @@ browserDriver.openBrowser = async function (url, f) {
 
     _chromeOption.addArguments('–disable-javascript ')
     _chromeOption.addArguments('–disable-plugins')
-
+    // _chromeOption.headless()
     driver = await new Builder().forBrowser('chrome')
         .setChromeOptions(_chromeOption)
         .build()
@@ -54,6 +57,7 @@ browserDriver.openBrowser = async function (url, f) {
         console.log('openBrowser1  ')
         await driver.getCurrentUrl().then((realUrl) => {
             console.log('openBrowser1 : ' + realUrl)
+
             if (realUrl == url) {
                 driver.sleep(2000).then(() => {
                     driver.quit()
@@ -62,26 +66,34 @@ browserDriver.openBrowser = async function (url, f) {
                 })
             }
 
-            //自动填充亚马逊账号及自动登录
-            driver.findElement(By.id('ap_email'))
-                .then((found) => {
-                    found.sendKeys('jeromeyang@sugrsugr.com')
-                        .then(() => {
-                            driver.findElement(By.id('ap_password'))
-                                .then((found) => {
-                                    found.sendKeys('jeromeyang520@')
-                                        .then(() => {
-                                            driver.findElement(By.id('signInSubmit'))
-                                                .then((found) => {
-                                                    found.submit()
-                                                    f(7,null)
-                                                })
-                                        })
-                                })
-                        })
+            driver.sleep(3000)
 
-                })
+            if (browserDriver.ap_email != null && browserDriver.ap_password != null){
+                //自动填充亚马逊账号及自动登录
+                driver.findElement(By.id('ap_email'))
+                    .then((found) => {
+                        found.sendKeys('jeromeyang@sugrsugr.com')
+                            .then(() => {
+                                driver.findElement(By.id('ap_password'))
+                                    .then((found) => {
+                                        found.sendKeys('jeromeyang520@')
+                                            .then(() => {
+                                                driver.findElement(By.id('signInSubmit'))
+                                                    .then((found) => {
+                                                        found.click()
+                                                        f(7,null)
+
+                                                    })
+                                            })
+                                    })
+                            })
+                    })
+            }
+
+
         })
+
+
 
 
 
