@@ -10,8 +10,10 @@ const player = require('./audio-speak')
 const emailer = require('./emails-service')
 //浏览器driver
 const browersDriver = require('./alexa-chrome-driver')
+// api-parser
+const apiParser = require('./api-parser')
 
-console.log(browersDriver.a)
+
 //xlsx
 const xlsx = require('./excelmanager')
 let xlsxPath = path.join(__dirname,'../assets/config/sat_config.xlsx');
@@ -39,14 +41,14 @@ let isLogin = false;
 
 let todolistId
 
-let lastestCardCreateTime = -1
 
-let lastestHistoryCreateTime = -1
-
-let lastestTodoItemCreateTime = -1
 
 /// *************************IpcMain************************
 ipcMain.on('alexa-login-click',(event) => {
+
+    browersDriver.ap_email = "jeromeyang@sugrsugr.com"
+    browersDriver.ap_password = "jeromeyang520@"
+
     browersDriver.openBrowser('https://alexa.amazon.com/',(code,result) => {
         console.log(code)
 
@@ -90,14 +92,17 @@ ipcMain.on('start-test-click',(event,data) => {
         event.sender.send('console-event','debug',xlsxPath1)
         dialog.showErrorBox('错误', '请填写有效完整的序列号后确认！再点击开始')
     }else {
+
+
+        apiParser.setSender(event.sender,deviceSerialNumber)
         //根据sn获取当前最新的card的creationTimestamp
         browersDriver.getCardList((_data) => {
-            parseCardData(_data,event)
+            apiParser.parseCardData(_data)
             // 获取当前itemId最近一个的todo item（updatedDateTime，value）
             browersDriver.getTODOList(todolistId,(_data) => {
-                parseTodoList(_data,event)
+                apiParser.parseTodoList(_data)
                 browersDriver.getHistory(_data => {
-                    parseHistory(_data,event)
+                    apiParser.parseHistory(_data)
                 })
             })
         })
@@ -125,116 +130,7 @@ ipcMain.on('confirm-device-sn',(event,sn) => {
 /// *************************IpcMain************************
 
 
-function parseCardData(_data,event) {
-    let data = JSON.parse(_data)
-    let cards = data.cards
-    if (cards.length > 0){
-        try{
-            cards.forEach(v => {
-                console.log('test1')
-                //TODO 若没有发现则取第一个作为基准
-                if (v.sourceDevice.serialNumber == deviceSerialNumber) {
-                    let heard
-                    let answer = ''
-                    let time
-                    let serialNumber
-                    console.log('test2')
 
-                    if(v.playbackAudioAction != null){
-                        heard = v.playbackAudioAction.mainText
-                    }
-                    console.log('test3')
-
-                    if(v.descriptiveText!=null){
-                        answer = v.descriptiveText[0]
-                    }
-                    time = v.creationTimestamp
-                    serialNumber = v.sourceDevice.serialNumber
-                    console.log('test4')
-
-                    let _card = {
-                        heard,
-                        answer,
-                        time,
-                        serialNumber
-                    }
-                    console.log('test5')
-
-                    console.log(_card)
-                    event.sender.send('console-event','info',JSON.stringify(_card))
-                    throw new Error('break')
-                }
-
-            })
-        }catch (e){
-            console.log(e.message)
-        }
-
-    }
-}
-
-function parseTodoList(_data,event) {
-    let data = JSON.parse(_data)
-    let list = data.list
-
-
-    if (list.length > 0){
-
-        let time = list[0].createdDateTime
-        let value = list[0].value
-
-        let _todo = {
-            value,
-            time
-        }
-
-        console.log(_todo)
-        event.sender.send('console-event','info',JSON.stringify(_todo))
-    }
-}
-
-function parseHistory(_data,event) {
-    let data = JSON.parse(_data)
-    let activities = data.activities
-
-
-    if (activities.length > 0){
-
-        if(lastestHistoryCreateTime == -1){ //只需要获取第一个
-            let time = ''
-            let serialNumber = ''
-            let summary = ''
-            let toDoId = ''
-            let value = ''
-
-            time = activities[0].creationTimestamp
-            serialNumber = activities[0].sourceDeviceIds[0].serialNumber
-            summary = activities[0].description.summary
-
-            if(activities[0].domainAttributes != null){
-                try {
-                    toDoId = activities[0].domainAttributes.toDoId
-                    value = activities[0].domainAttributes.value
-                }catch (e){
-
-                }
-            }
-
-            let _history = {
-                time,
-                serialNumber,
-                summary,
-                toDoId,
-                value
-            }
-
-            event.sender.send('console-event','info',JSON.stringify(_history))
-        }else { //需要将所有大于当前时间值的存储下来
-
-        }
-        // event.sender.send('console-event','info',JSON.stringify(_todo))
-    }
-}
 
 
 

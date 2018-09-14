@@ -72,11 +72,11 @@ browserDriver.openBrowser = async function (url, f) {
                 //自动填充亚马逊账号及自动登录
                 driver.findElement(By.id('ap_email'))
                     .then((found) => {
-                        found.sendKeys('jeromeyang@sugrsugr.com')
+                        found.sendKeys(browserDriver.ap_email)
                             .then(() => {
                                 driver.findElement(By.id('ap_password'))
                                     .then((found) => {
-                                        found.sendKeys('jeromeyang520@')
+                                        found.sendKeys(browserDriver.ap_password)
                                             .then(() => {
                                                 driver.findElement(By.id('signInSubmit'))
                                                     .then((found) => {
@@ -99,7 +99,7 @@ browserDriver.openBrowser = async function (url, f) {
 
 
         try{
-            await driver.wait(until.titleIs('Please confirm your identity'),20000)
+            await driver.wait(until.titleIs('Please confirm your identity'),10000)
             f(8,null)
         }catch (E){
 
