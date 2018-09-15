@@ -82,6 +82,8 @@ ipcMain.on('alexa-login-click',(event) => {
             event.sender.send('console-event','debug','正在登录...')
         }else if (code == 8){
             event.sender.send('console-event','debug','请在网页中输入验证码！！！')
+        }else if (code == 9){
+          event.sender.send('console-event','debug','登录界面请求超时,刷新后重试！！！')
         }
     })
 })

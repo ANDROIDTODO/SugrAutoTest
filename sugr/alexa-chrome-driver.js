@@ -87,6 +87,8 @@ browserDriver.openBrowser = async function (url, f) {
                                             })
                                     })
                             })
+                    },(reason) =>{
+                      f(9,null)
                     })
             }
 
