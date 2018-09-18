@@ -13,6 +13,8 @@ const browersDriver = require('./alexa-chrome-driver')
 // api-parser
 const apiParser = require('./api-parser')
 
+const judge = require('./judgement-service')
+
 
 //xlsx
 const xlsx = require('./excelmanager')
@@ -40,6 +42,8 @@ let isDeviceUnderControll = false
 let isLogin = false;
 
 let todolistId
+
+let isstart = false
 
 
 
@@ -93,19 +97,27 @@ ipcMain.on('start-test-click',(event,data) => {
         dialog.showErrorBox('错误', '请填写有效完整的序列号后确认！再点击开始')
     }else {
 
-
-        apiParser.setSender(event.sender,deviceSerialNumber)
-        //根据sn获取当前最新的card的creationTimestamp
-        browersDriver.getCardList((_data) => {
-            apiParser.parseCardData(_data)
-            // 获取当前itemId最近一个的todo item（updatedDateTime，value）
-            browersDriver.getTODOList(todolistId,(_data) => {
-                apiParser.parseTodoList(_data)
-                browersDriver.getHistory(_data => {
-                    apiParser.parseHistory(_data)
+        if(!isstart){
+            isstart =  true
+            apiParser.setSender(event.sender,deviceSerialNumber)
+            judge.init(browersDriver,apiParser,todolistId)
+            //根据sn获取当前最新的card的creationTimestamp
+            browersDriver.getCardList((_data) => {
+                apiParser.parseCardData(_data)
+                // 获取当前itemId最近一个的todo item（updatedDateTime，value）
+                browersDriver.getTODOList(todolistId,(_data) => {
+                    apiParser.parseTodoList(_data)
+                    browersDriver.getHistory(_data => {
+                        apiParser.parseHistory(_data)
+                    })
                 })
             })
-        })
+        }else {
+            judge.judge(0,'en',function (_data) {
+                event.sender.send('console-event','debug',JSON.stringify(_data,null,'\t'))
+            })
+        }
+
 
 
         // 获取history中最近的一个item （creationTimestamp） //是否被唤醒
@@ -115,6 +127,14 @@ ipcMain.on('start-test-click',(event,data) => {
 })
 
 ipcMain.on('refresh-devices-click',(event) => {
+
+})
+
+ipcMain.on('stop-click',(event) => {
+
+})
+
+ipcMain.on('reset-click',(event) => {
 
 })
 

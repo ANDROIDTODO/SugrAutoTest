@@ -10,8 +10,24 @@ const alexaLogin = document.getElementById('alexa-login')
 const startTest = document.getElementById('start')
 const sn_confirm = document.getElementById('sn-confirm')
 
+const stopTest = document.getElementById('stop')
+const resetTest = document.getElementById('reset')
 let isRetryGetDevices = false;
 
+
+stopTest.addEventListener('click', () => {
+    console.log('click stop button!')
+    ipcRenderer.send('stop-click')
+
+
+})
+
+resetTest.addEventListener('click', () => {
+    console.log('click reset button!')
+    ipcRenderer.send('reset-click')
+
+
+})
 
 alexaLogin.addEventListener('click', () => {
     console.log('click alexa login button!')
