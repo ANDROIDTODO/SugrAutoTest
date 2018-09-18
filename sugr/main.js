@@ -15,6 +15,8 @@ const apiParser = require('./api-parser')
 
 const judge = require('./judgement-service')
 
+const controller = require('./p-controller')
+
 
 //xlsx
 const xlsx = require('./excelmanager')
