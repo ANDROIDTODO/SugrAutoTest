@@ -24,28 +24,14 @@ let xlsxPath = path.join(__dirname,'../assets/config/sat_config.xlsx');
 xlsx.initialize(xlsxPath,null,null)
 
 
-let currentUtteranceIndex = 0
-let isNeedSilence = false
-let isNeedKitchen = false
-let isNeedMusic = false
-let isNeedPlayback = false
-
-let position_330 = false
-let position_390 = false
-let position_930 = false
-let position_990 = false
-
 let deviceSerialNumber
 
 let currentLanguage
 
 let isDeviceUnderControll = false
 
-let isLogin = false;
-
 let todolistId
 
-let isstart = false
 
 
 
@@ -96,13 +82,13 @@ ipcMain.on('start-test-click',(event,data) => {
 
     if (deviceSerialNumber == null || deviceSerialNumber == ''){
 
-        let xlsxPath1 = path.join(__dirname,'../assets/config/sat_config.xlsx');
-        event.sender.send('console-event','debug',xlsxPath1)
+        //let xlsxPath1 = path.join(__dirname,'../assets/config/sat_config.xlsx');
+        //event.sender.send('console-event','debug',xlsxPath1)
         dialog.showErrorBox('错误', '请填写有效完整的序列号后确认！再点击开始')
     }else {
 
-        if(!isstart){
-            isstart =  true
+        //if(!isstart){
+        //    isstart =  true
             apiParser.setSender(event.sender,deviceSerialNumber)
             judge.init(browersDriver,apiParser,todolistId)
             //根据sn获取当前最新的card的creationTimestamp
@@ -116,11 +102,11 @@ ipcMain.on('start-test-click',(event,data) => {
                     })
                 })
             })
-        }else {
-            judge.judge(0,'en',function (_data) {
-                event.sender.send('console-event','debug',JSON.stringify(_data,null,'\t'))
-            })
-        }
+        //}else {
+        //   judge.judge(0,'en',function (_data) {
+        //        event.sender.send('console-event','debug',JSON.stringify(_data,null,'\t'))
+        //    })
+        //}
 
 
 
