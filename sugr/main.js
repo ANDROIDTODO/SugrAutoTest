@@ -7,7 +7,7 @@ const path = require('path')
 //播报控件
 const player = require('./audio-speak')
 //邮件控件
-const emailer = require('./emails-service')
+const mailer = require('./emails-service')
 //浏览器driver
 const browersDriver = require('./alexa-chrome-driver')
 // api-parser
@@ -16,7 +16,7 @@ const apiParser = require('./api-parser')
 const judge = require('./judgement-service')
 
 const controller = require('./p-controller')
-
+controller.initialize(browersDriver,player,judge,mailer,apiParser)
 
 //xlsx
 const xlsx = require('./excelmanager')
@@ -65,6 +65,7 @@ ipcMain.on('alexa-login-click',(event) => {
             }
         }else if (code == 6){
             todolistId = result
+            controller.setTodoListId(result)
             console.log('todolistId:'+todolistId)
         }else if (code == 7){
             event.sender.send('console-event','debug','正在登录...')
@@ -99,6 +100,8 @@ ipcMain.on('start-test-click',(event,data) => {
                     apiParser.parseTodoList(_data)
                     browersDriver.getHistory(_data => {
                         apiParser.parseHistory(_data)
+
+                        //controller 入口
                     })
                 })
             })
@@ -132,6 +135,7 @@ ipcMain.on('reset-click',(event) => {
 ipcMain.on('confirm-device-sn',(event,sn) => {
     console.log('confirm-device-sn click')
     deviceSerialNumber = sn
+    controller.setSN(sn)
     console.log("deviceSerialNumber:"+deviceSerialNumber)
 })
 
