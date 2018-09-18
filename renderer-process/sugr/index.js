@@ -60,7 +60,11 @@ startTest.addEventListener('click', () => {
         sense_list.push('playback')
     }
 
-    let language = $('#language').val()
+    let _language = $('#language').val()
+
+    let language = []
+    language.push(_language)
+
 
     let position = []
 
@@ -74,7 +78,7 @@ startTest.addEventListener('click', () => {
 
     console.log(_date)
 
-    ipcRenderer.send('start-test-click')
+    ipcRenderer.send('start-test-click',_date)
     console.log(__dirname)
 
 
