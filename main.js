@@ -6,6 +6,9 @@ if (require.main !== module) {
     })
 }
 
+
+
+
 const path = require('path')
 const glob = require('glob')
 const {app, BrowserWindow} = require('electron')
