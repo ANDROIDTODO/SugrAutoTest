@@ -46,16 +46,18 @@ ApiParse.parseCardData = function (_data) {
 
     if (cards.length > 0) {
         try {
-
+            console.log("parseCardData 1")
             cards.forEach(v => {
                 //TODO 若没有发现则取第一个作为基准
+                console.log("parseCardData 2 :" + v.sourceDevice.serialNumber +"\n" + deviceSerialNumber)
+
                 if (v.sourceDevice.serialNumber == deviceSerialNumber) {
                     let heard
                     let answer = ''
                     let time
                     let serialNumber
 
-
+                    console.log("parseCardData 2")
                     if (v.playbackAudioAction != null) {
                         heard = v.playbackAudioAction.mainText
                     }
@@ -86,6 +88,7 @@ ApiParse.parseCardData = function (_data) {
                         sender.send('console-event', 'info', JSON.stringify(_result))
                         throw new Error('break')
                     } else {
+                        console.log('parseCardData return 3')
                         _result.push(_card)
                     }
                 }
@@ -170,7 +173,7 @@ ApiParse.parseTodoList = function (_data) {
 ApiParse.parseHistory = function (_data) {
     let data = JSON.parse(_data)
     let activities = data.activities
-    console.log('1lastestHistoryCreateTime:' + lastestHistoryCreateTime)
+
     let _result = []
 
     if (activities.length > 0) {
@@ -247,7 +250,7 @@ ApiParse.parseHistory = function (_data) {
         }
 
         lastestHistoryCreateTime = activities[0].creationTimestamp
-        console.log('2lastestHistoryCreateTime:' + lastestHistoryCreateTime)
+
 
         if (lastestHistoryCreateTime == -1) {
             return null

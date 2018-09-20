@@ -13,6 +13,8 @@ ipcRenderer.on('console-event', (event, level, text) => {
         append = '<p style="color: red">[' + time + ']: ' + text + '</p>'
     } else if (level === 'info'){
         append = '<p style="color: steelblue">[' + time + ']: ' + text + '</p>'
+    } else if (level === 'result'){
+        append = '<p style="color: #dd1144">[' + time + ']: ' + text + '</p>'
     } else {
         append = '<p>[' + time + ']: ' + text + '</p>'
     }

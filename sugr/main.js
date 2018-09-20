@@ -2,7 +2,7 @@
 // 与界面通信通过IPC
 // 规则流程:  1.点击开始后,判断选择的状态,若有错误给出提示后重新选择,若无则将根据选择播放第一条的语料
 //登录的账号密码可以写在config中
-const {ipcMain,dialog} = require('electron')
+const {ipcMain,dialog,BrowserWindow} = require('electron')
 const path = require('path')
 //播报控件
 const player = require('./audio-speak')
@@ -16,12 +16,16 @@ const apiParser = require('./api-parser')
 const judge = require('./judgement-service')
 
 const controller = require('./p-controller')
-controller.initialize(browersDriver,player,judge,mailer,apiParser)
+
 
 //xlsx
 const xlsx = require('./excelmanager')
-let xlsxPath = path.join(__dirname,'../assets/config/sat_config.xlsx');
+let xlsxPath = path.join(__dirname,'../assets/config/EN-US.xlsx');
+
 xlsx.initialize(xlsxPath,null,null)
+
+controller.initialize(browersDriver,player,judge,mailer,apiParser,xlsx)
+
 
 
 let deviceSerialNumber
@@ -90,21 +94,7 @@ ipcMain.on('start-test-click',(event,data) => {
 
         //if(!isstart){
         //    isstart =  true
-            apiParser.setSender(event.sender,deviceSerialNumber)
-            judge.init(browersDriver,apiParser,todolistId)
-            //根据sn获取当前最新的card的creationTimestamp
-            browersDriver.getCardList((_data) => {
-                apiParser.parseCardData(_data)
-                // 获取当前itemId最近一个的todo item（updatedDateTime，value）
-                browersDriver.getTODOList(todolistId,(_data) => {
-                    apiParser.parseTodoList(_data)
-                    browersDriver.getHistory(_data => {
-                        apiParser.parseHistory(_data)
-
-                        //controller 入口
-                    })
-                })
-            })
+            controller.startTest(data,event.sender)
         //}else {
         //   judge.judge(0,'en',function (_data) {
         //        event.sender.send('console-event','debug',JSON.stringify(_data,null,'\t'))
@@ -124,7 +114,7 @@ ipcMain.on('refresh-devices-click',(event) => {
 })
 
 ipcMain.on('stop-click',(event) => {
-
+    controller.pause()
 })
 
 ipcMain.on('reset-click',(event) => {
@@ -138,6 +128,8 @@ ipcMain.on('confirm-device-sn',(event,sn) => {
     controller.setSN(sn)
     console.log("deviceSerialNumber:"+deviceSerialNumber)
 })
+
+
 
 
 

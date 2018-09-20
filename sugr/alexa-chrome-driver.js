@@ -37,11 +37,11 @@ browserDriver.openBrowser = async function (url, f) {
 
     _chromeOption = new chrome.Options()
     // _chromeOption.addArguments('--disable-gpu')
-    _chromeOption.addArguments('--hide-scrollbars')
-    _chromeOption.addArguments('blink-settings=imagesEnabled=false')
+    // _chromeOption.addArguments('--hide-scrollbars')
+    // _chromeOption.addArguments('blink-settings=imagesEnabled=false')
 
-    _chromeOption.addArguments('–disable-javascript ')
-    _chromeOption.addArguments('–disable-plugins')
+    // _chromeOption.addArguments('–disable-javascript ')
+    // _chromeOption.addArguments('–disable-plugins')
     // _chromeOption.headless()
     driver = await new Builder().forBrowser('chrome')
         .setChromeOptions(_chromeOption)
@@ -209,6 +209,7 @@ browserDriver.getHistory = async(f) => {
 
 
 browserDriver.getAlexaApi = async(url,f) => {
+    console.log("getAlexaApi:"+url)
     await driver.get(url)
     let STR_READY_STATE = ''
     while (STR_READY_STATE != 'complete') {
