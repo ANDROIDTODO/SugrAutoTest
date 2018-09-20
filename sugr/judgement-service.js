@@ -89,6 +89,7 @@ judge.judge = function (index,language,f) {
 
                     }
                 }else { //displaycard
+                    //应该是遍历所有的card，防止有干扰，唤醒需要单独考虑
                     if (_card != null){
 
                         let __card = _card[0]
