@@ -136,7 +136,7 @@ function loadDemos() {
     require(path.join(__dirname, 'sugr/consolemanager.js'));
     require(path.join(__dirname, 'sugr/main.js'));
     require(path.join(__dirname, 'sugr/dialog.js'));
-
+    require(path.join(__dirname, 'sugr/open-file.js'));
 }
 
 initialize()
