@@ -3,9 +3,11 @@
 // 规则流程:  1.点击开始后,判断选择的状态,若有错误给出提示后重新选择,若无则将根据选择播放第一条的语料
 //登录的账号密码可以写在config中
 const {ipcMain,dialog,BrowserWindow} = require('electron')
+const settings = require('electron-settings')
 const path = require('path')
 //播报控件
 const player = require('./audio-speak')
+player.init()
 //邮件控件
 const mailer = require('./emails-service')
 //浏览器driver
@@ -17,7 +19,8 @@ const judge = require('./judgement-service')
 
 const controller = require('./p-controller')
 
-
+player.setPlayerPath(settings.get('playerPath'))
+console.log(settings.get('playerPath'))
 //xlsx
 const xlsx = require('./excelmanager')
 let xlsxPath = path.join(__dirname,'../assets/config/EN-US.xlsx');
@@ -42,8 +45,8 @@ let todolistId
 /// *************************IpcMain************************
 ipcMain.on('alexa-login-click',(event) => {
 
-    browersDriver.ap_email = "jeromeyang@sugrsugr.com"
-    browersDriver.ap_password = "jeromeyang520@"
+    browersDriver.ap_email = "kristinazhang@sugrsugr.com"
+    browersDriver.ap_password = "Sugr.123"
 
     browersDriver.openBrowser('https://alexa.amazon.com/',(code,result) => {
         console.log(code)
@@ -130,7 +133,18 @@ ipcMain.on('confirm-device-sn',(event,sn) => {
 })
 
 
-
+ipcMain.on('open-file-dialog', (event) => {
+  dialog.showOpenDialog({
+    properties: ['openFile']
+  }, (files) => {
+    if (files) {
+      let playerPath = files[0]
+      console.log(playerPath)
+      settings.set('playerPath',playerPath)
+      player.setPlayerPath(playerPath)
+    }
+  })
+})
 
 
 /// *************************IpcMain************************

@@ -49,7 +49,7 @@ browserDriver.openBrowser = async function (url, f) {
     chromeOptions = driver.chromeOptions
 
     window = driver.manage().window()
-    window.maximize()
+    // window.maximize()
 
     try {
         await driver.get(url)
@@ -60,9 +60,9 @@ browserDriver.openBrowser = async function (url, f) {
 
             if (realUrl == url) {
                 driver.sleep(2000).then(() => {
-                    driver.quit()
-                    driver = null
-                    f(2, null)
+                    // driver.quit()
+                    // driver = null
+                    // f(2, null)
                 })
             }
 
@@ -104,7 +104,7 @@ browserDriver.openBrowser = async function (url, f) {
             await driver.wait(until.titleIs('Please confirm your identity'),10000)
             f(8,null)
         }catch (E){
-
+            console.log(E)
         }
 
 
@@ -130,7 +130,7 @@ browserDriver.openBrowser = async function (url, f) {
 
 
 
-        await driver.wait(until.titleIs('xxxxxx'))
+        // await driver.wait(until.titleIs('xxxxxx'))
         console.log('waiting end')
     } catch (e) {
         console.log(e)
@@ -144,7 +144,6 @@ browserDriver.openBrowser = async function (url, f) {
 
 browserDriver.getDeviceOnlineList = async(f) => {
     browserDriver.getAlexaApi(URL_DEVICE_LIST,function (_body) {
-        console.log(_body)
         let data = JSON.parse(_body)
         let devices = data.devices
         let _result = []

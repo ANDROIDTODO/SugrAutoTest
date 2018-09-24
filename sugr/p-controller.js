@@ -13,7 +13,7 @@ let apiParser
 let xlsx
 
 
-let currentUtteranceIndex = 1
+let currentUtteranceIndex = 11
 
 
 let deviceSerialNumber = null
@@ -133,6 +133,11 @@ function next(){
         sender.send('console-event','debug',"语言："+allLanguage[currentLanguage]+"-位置：" +position[currentPosition]
             +"-场景"+sense[currentSense] +"-第"+(currentUtteranceIndex+1)+"条对话--开始播放"
         )
+        player.play(position[currentPosition],
+                    allLanguage[currentLanguage],
+                    sense[currentSense],
+                    currentUtteranceIndex
+            )
 
         timer = setTimeout(function () {
             if(currentUtteranceIndex !=29){
@@ -146,6 +151,11 @@ function next(){
                 })
 
             }else {
+                if((sense.length-1) > currentSense){
+                        currentSense++
+                        currentUtteranceIndex = 0
+                        next()
+                }
 
                 console.log('切换场景')
             }

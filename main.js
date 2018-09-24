@@ -69,9 +69,9 @@ function initialize() {
             windowOptions.icon = path.join(__dirname, '/assets/app-icon/png/512.png')
         }
 
-        if (process.platform === 'windows'){
-
-        }
+        
+        console.log(process.platform)
+        
 
         mainWindow = new BrowserWindow(windowOptions)
         mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
@@ -87,7 +87,7 @@ function initialize() {
             mainWindow = null
         })
 
-        socketm.initMainProcess(mainWindow)
+        // socketm.initMainProcess(mainWindow)
     }
 
     app.on('ready', () => {
@@ -136,7 +136,6 @@ function loadDemos() {
     require(path.join(__dirname, 'sugr/consolemanager.js'));
     require(path.join(__dirname, 'sugr/main.js'));
     require(path.join(__dirname, 'sugr/dialog.js'));
-    require(path.join(__dirname, 'sugr/open-file.js'));
 }
 
 initialize()

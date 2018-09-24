@@ -11,7 +11,7 @@ const startTest = document.getElementById('start')
 const sn_confirm = document.getElementById('sn-confirm')
 
 const stopTest = document.getElementById('stop')
-const resetTest = document.getElementById('reset')
+const choicePlayer = document.getElementById('choice_player')
 let isRetryGetDevices = false;
 
 
@@ -22,9 +22,9 @@ stopTest.addEventListener('click', () => {
 
 })
 
-resetTest.addEventListener('click', () => {
-    console.log('click reset button!')
-    ipcRenderer.send('reset-click')
+choicePlayer.addEventListener('click', () => {
+    console.log('click choicePlayer button!')
+    ipcRenderer.send('open-file-dialog')
 
 
 })
@@ -123,5 +123,8 @@ ipcRenderer.on('alexa-no-devices', (event, noDevices) => {
     }
 
 })
+
+
+
 
 

@@ -49,7 +49,7 @@ ApiParse.parseCardData = function (_data) {
             console.log("parseCardData 1")
             cards.forEach(v => {
                 //TODO 若没有发现则取第一个作为基准
-                console.log("parseCardData 2 :" + v.sourceDevice.serialNumber +"\n" + deviceSerialNumber)
+                
 
                 if (v.sourceDevice.serialNumber == deviceSerialNumber) {
                     let heard
