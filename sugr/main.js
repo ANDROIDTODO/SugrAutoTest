@@ -146,6 +146,11 @@ ipcMain.on('open-file-dialog', (event) => {
   })
 })
 
+ipcMain.on('switch-scroll',(event,_sc) =>{
+    event.sender.send('console-scroll-controller',_sc)
+})
+
+
 
 /// *************************IpcMain************************
 

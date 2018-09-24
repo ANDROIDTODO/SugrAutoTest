@@ -6,7 +6,15 @@ let consoleText = '';
 
 let isScollToBottom = true;
 
+
+ipcRenderer.on('console-scroll-controller',(event,_isScollToBottom) =>{
+    console.log('current console scroll status :' + _isScollToBottom)
+    isScollToBottom = _isScollToBottom
+})
+
 ipcRenderer.on('console-event', (event, level, text) => {
+
+    var div = document.getElementById('runtimeRecord');
     let append
     let time = moment().format('YYYY-MM-DD HH:mm:ss')
     if (level === 'error') {
@@ -18,8 +26,14 @@ ipcRenderer.on('console-event', (event, level, text) => {
     } else {
         append = '<p>[' + time + ']: ' + text + '</p>'
     }
+
     consoleText += append
-    recodeText.innerHTML = consoleText
+    div.innerHTML = consoleText
+    if(isScollToBottom){
+        div.scrollTop = div.scrollHeight
+    }
+
+
 
 })
 
@@ -38,6 +52,8 @@ ipcRenderer.on('socket-message', (event, level, text) => {
         recodeText.innerHTML = consoleText
     }
 })
+
+
 
 ipcRenderer.on('console-event-json', (event, level, text) => {
     if (text != undefined) {
