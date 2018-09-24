@@ -14,6 +14,19 @@ const stopTest = document.getElementById('stop')
 const resetTest = document.getElementById('reset')
 let isRetryGetDevices = false;
 
+layui.use('form', function(){
+    var form = layui.form;
+
+    form.on('switch(console-scroll)', function(data){
+        console.log(data.elem.checked); //开关是否开启，true或者false
+        ipcRenderer.send('switch-scroll',data.elem.checked)
+    });
+});
+
+
+
+
+
 
 stopTest.addEventListener('click', () => {
     console.log('click stop button!')

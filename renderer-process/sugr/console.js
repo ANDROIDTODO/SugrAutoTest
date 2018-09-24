@@ -6,6 +6,12 @@ let consoleText = '';
 
 let isScollToBottom = true;
 
+
+ipcRenderer.on('console-scroll-controller',(event,_isScollToBottom) =>{
+    console.log('current console scroll status :' + _isScollToBottom)
+    isScollToBottom = _isScollToBottom
+})
+
 ipcRenderer.on('console-event', (event, level, text) => {
 
     var div = document.getElementById('runtimeRecord');
@@ -23,7 +29,10 @@ ipcRenderer.on('console-event', (event, level, text) => {
 
     consoleText += append
     div.innerHTML = consoleText
-    div.scrollTop = div.scrollHeight;
+    if(isScollToBottom){
+        div.scrollTop = div.scrollHeight
+    }
+
 
 
 })

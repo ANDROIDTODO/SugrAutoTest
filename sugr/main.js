@@ -129,7 +129,9 @@ ipcMain.on('confirm-device-sn',(event,sn) => {
     console.log("deviceSerialNumber:"+deviceSerialNumber)
 })
 
-
+ipcMain.on('switch-scroll',(event,_sc) =>{
+    event.sender.send('console-scroll-controller',_sc)
+})
 
 
 
