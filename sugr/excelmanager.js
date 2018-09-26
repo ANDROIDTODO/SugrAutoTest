@@ -3,9 +3,10 @@ const fs = require('fs')
 const path = require('path')
 
 let EN_workbook
-
+let FR_workbook
 
 let EN_keyword = []
+let FR_keyword = []
 
 
 function xlsx() {
@@ -28,6 +29,7 @@ xlsx.initialize = function (path,chromeDriver,controller) {
 
 
     parse('en')
+    parse('fr')
 
 
 }
@@ -36,8 +38,8 @@ xlsx.getKeyword = function (index) {
     if (index == 'en'){
         return EN_keyword
     }
-    else {
-        return null
+    else if(index == 'fr'){
+        return FR_keyword
     }
 }
 
@@ -68,9 +70,11 @@ function parse(index) {
 
     if(index == 'en'){
         EN_keyword = keyword
+    } else if (index == 'fr') {}{
+        FR_keyword = keyword
     }
 
-    console.log(EN_keyword)
+    console.log(FR_keyword)
 }
 
 function parseBook(index) {
@@ -79,6 +83,10 @@ function parseBook(index) {
         let xlsxPath = path.join(__dirname,'../assets/config/EN-US.xlsx');
         workbook = XLSX.readFile(xlsxPath)
         EN_workbook = workbook
+    } else if(index == 'fr'){
+        let xlsxPath = path.join(__dirname,'../assets/config/FR.xlsx');
+        workbook = XLSX.readFile(xlsxPath)
+        FR_workbook = workbook
     }
 
     return workbook

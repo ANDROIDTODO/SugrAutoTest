@@ -48,7 +48,8 @@ ipcMain.on('alexa-login-click',(event) => {
     // browersDriver.ap_email = "jeromeyang@sugrsugr.com"
     // browersDriver.ap_password = "jeromeyang@520"
 
-    browersDriver.openBrowser('https://alexa.amazon.com/',(code,result) => {
+    browersDriver.setLanguage('fr')
+    browersDriver.openBrowser((code,result) => {
         console.log(code)
 
         if (code == 1) {

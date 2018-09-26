@@ -13,7 +13,7 @@ let apiParser
 let xlsx
 
 
-let currentUtteranceIndex = 28
+let currentUtteranceIndex = -1
 
 
 let deviceSerialNumber = null

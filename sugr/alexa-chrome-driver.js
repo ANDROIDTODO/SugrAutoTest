@@ -8,16 +8,22 @@ const chromedriver = require('chromedriver')
 
 chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build())
 
-
+const URL_LOGIN = "https://alexa.amazon.com/"
 const URL_DEVICE_LIST = 'https://alexa.amazon.com/api/devices-v2/device'
 const URL_NAME_LIST = 'https://alexa.amazon.com/api/namedLists'
 const URL_CARDS = 'https://alexa.amazon.com/api/cards'
 const URL_HISTORY = 'https://alexa.amazon.com/api/activities?startTime=&size=50&offset=-1'
 
+const URL_LOGIN_FR = "https://alexa.amazon.fr/"
+const URL_DEVICE_LIST_FR = 'https://alexa.amazon.fr/api/devices-v2/device'
+const URL_NAME_LIST_FR = 'https://alexa.amazon.fr/api/namedLists'
+const URL_CARDS_FR = 'https://alexa.amazon.fr/api/cards'
+const URL_HISTORY_FR = 'https://alexa.amazon.fr/api/activities?startTime=&size=50&offset=-1'
+
 let driver = null
 let window = null
 let chromeOptions = null
-
+let language = null
 
 // 我们需要给出算法库的版本等等
 
@@ -28,8 +34,12 @@ function browserDriver() {
 browserDriver.ap_email = null
 browserDriver.ap_password = null
 
+browserDriver.setLanguage = function(_language){
+    language = _language
+}
+
 //需要返回 当前browers关闭状态,是否登录状态
-browserDriver.openBrowser = async function (url, f) {
+browserDriver.openBrowser = async function (f) {
 
     if (driver != null) {
         return
@@ -50,6 +60,13 @@ browserDriver.openBrowser = async function (url, f) {
 
     window = driver.manage().window()
     // window.maximize()
+    let url
+
+    if(language == 'en'){
+        url = URL_LOGIN
+    }else if (language == 'fr') {}{
+        url = URL_LOGIN_FR
+    }
 
     try {
         await driver.get(url)
@@ -143,7 +160,15 @@ browserDriver.openBrowser = async function (url, f) {
 }
 
 browserDriver.getDeviceOnlineList = async(f) => {
-    browserDriver.getAlexaApi(URL_DEVICE_LIST,function (_body) {
+    let _url
+    if(language == 'en'){
+        _url = URL_DEVICE_LIST
+    }else if (language == 'fr') {}{
+        _url = URL_DEVICE_LIST_FR
+    }
+
+
+    browserDriver.getAlexaApi(_url,function (_body) {
         let data = JSON.parse(_body)
         let devices = data.devices
         let _result = []
@@ -174,7 +199,14 @@ browserDriver.getDeviceOnlineList = async(f) => {
 }
 
 browserDriver.getNameList = async(f) => {
-    browserDriver.getAlexaApi(URL_NAME_LIST,function (_body) {
+
+    let _url
+    if(language == 'en'){
+        _url = URL_NAME_LIST
+    }else if (language == 'fr') {}{
+        _url = URL_NAME_LIST_FR
+    }
+    browserDriver.getAlexaApi(_url,function (_body) {
         console.log(_body)
         let data = JSON.parse(_body)
         let lists = data.lists
@@ -186,22 +218,43 @@ browserDriver.getNameList = async(f) => {
     })
 }
 
+
 browserDriver.getTODOList = async(listId,f) => {
+
+    let _url
+    if(language == 'en'){
+        _url = URL_NAME_LIST
+    }else if (language == 'fr') {}{
+        _url = URL_NAME_LIST_FR
+    }
     if (listId!=null){
-        browserDriver.getAlexaApi(URL_NAME_LIST+'/'+listId+'/items',function (_body) {
+        browserDriver.getAlexaApi(_url+'/'+listId+'/items',function (_body) {
             f(_body)
         })
     }
 }
 
 browserDriver.getCardList = async(f) => {
-    browserDriver.getAlexaApi(URL_CARDS,function (_body) {
+    let _url
+    if(language == 'en'){
+        _url = URL_CARDS
+    }else if (language == 'fr') {}{
+        _url = URL_CARDS_FR
+    }
+    browserDriver.getAlexaApi(_url,function (_body) {
         f(_body)
     })
 }
 
 browserDriver.getHistory = async(f) => {
-    browserDriver.getAlexaApi(URL_HISTORY,function (_body) {
+
+    let _url
+    if(language == 'en'){
+        _url = URL_HISTORY
+    }else if (language == 'fr') {}{
+        _url = URL_HISTORY_FR
+    }
+    browserDriver.getAlexaApi(_url,function (_body) {
         f(_body)
     })
 }
