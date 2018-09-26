@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by Jeromeyang on 2018/9/12.
  */
 
@@ -13,7 +13,7 @@ let apiParser
 let xlsx
 
 
-let currentUtteranceIndex = 11
+let currentUtteranceIndex = 28
 
 
 let deviceSerialNumber = null
@@ -125,6 +125,12 @@ function start(config) {
 
 function next(){
 
+    // if(currentUtteranceIndex == -1){
+    //     currentUtteranceIndex = currentUtteranceIndex+3
+    // }else{
+    //     currentUtteranceIndex = currentUtteranceIndex+5
+    // }
+
     currentUtteranceIndex++
     console.log("currentUtteranceIndex:"+ currentUtteranceIndex)
     startWithGetLastestData(function () {
@@ -151,15 +157,22 @@ function next(){
                 })
 
             }else {
-                if((sense.length-1) > currentSense){
-                        currentSense++
-                        currentUtteranceIndex = 0
-                        next()
-                }
 
+                judge.judge(currentUtteranceIndex,allLanguage[currentLanguage],function (_data) {
+                    //将结果保存
+                    sender.send('console-event','result',JSON.stringify(_data))
+
+                    console.log("currentSense:"+currentSense+",(sense.length-1):"+(sense.length-1))
+                    if((sense.length-1) > currentSense){
+                        currentSense++
+                        currentUtteranceIndex = -1
+                        next()
+                    }
+                    
+                })
                 console.log('切换场景')
             }
-        },25000)
+        },15000)
     })
 
 }

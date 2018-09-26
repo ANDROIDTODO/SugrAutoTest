@@ -60,6 +60,7 @@ judge.judge = function (index,language,f) {
                 if (index == 2 || index == 7 || index == 12 || index == 17 || index == 22 || index == 27){
                     console.log('todo list judge 1 ')
                     console.log(JSON.stringify(_history))
+                    let correctNum = 0
                     if(_history != null){
                         _history.forEach(v =>{
 
@@ -71,7 +72,7 @@ judge.judge = function (index,language,f) {
                                     console.log('todo list judge 3 ')
 
 
-                                    let correctNum = 0
+                                    
                                     for(let i = 0; i < keyword.length ;i++){
                                         if (heard != null && heard.indexOf(keyword[i]) != -1){
                                             correctNum++
@@ -79,7 +80,7 @@ judge.judge = function (index,language,f) {
                                     }
                                     console.log('todo list judge 4 : ' + correctNum +"," + keyword.length)
 
-                                    isCorrect = correctNum == keyword.length;
+                                    isCorrect = correctNum >= keyword.length;
                                     if (isCorrect){ //纠错
                                         isWakeup = true
                                     }

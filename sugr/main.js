@@ -1,4 +1,4 @@
-// 负责调度所有模块
+﻿// 负责调度所有模块
 // 与界面通信通过IPC
 // 规则流程:  1.点击开始后,判断选择的状态,若有错误给出提示后重新选择,若无则将根据选择播放第一条的语料
 //登录的账号密码可以写在config中
@@ -45,8 +45,8 @@ let todolistId
 /// *************************IpcMain************************
 ipcMain.on('alexa-login-click',(event) => {
 
-    browersDriver.ap_email = "kristinazhang@sugrsugr.com"
-    browersDriver.ap_password = "Sugr.123"
+    // browersDriver.ap_email = "jeromeyang@sugrsugr.com"
+    // browersDriver.ap_password = "jeromeyang@520"
 
     browersDriver.openBrowser('https://alexa.amazon.com/',(code,result) => {
         console.log(code)
@@ -117,7 +117,11 @@ ipcMain.on('refresh-devices-click',(event) => {
 })
 
 ipcMain.on('stop-click',(event) => {
-    controller.pause()
+    judge.judge(2,'en',function (_data) {
+                    //将结果保存
+                    sender.send('console-event','result',JSON.stringify(_data))
+                    next()
+                })
 })
 
 ipcMain.on('reset-click',(event) => {
