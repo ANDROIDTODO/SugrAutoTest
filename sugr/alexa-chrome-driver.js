@@ -64,7 +64,7 @@ browserDriver.openBrowser = async function (f) {
 
     if(language == 'en'){
         url = URL_LOGIN
-    }else if (language == 'fr') {}{
+    }else if (language == 'fr') {
         url = URL_LOGIN_FR
     }
 
@@ -163,9 +163,10 @@ browserDriver.getDeviceOnlineList = async(f) => {
     let _url
     if(language == 'en'){
         _url = URL_DEVICE_LIST
-    }else if (language == 'fr') {}{
+    }else if (language == 'fr') {
         _url = URL_DEVICE_LIST_FR
     }
+
 
 
     browserDriver.getAlexaApi(_url,function (_body) {
@@ -203,7 +204,7 @@ browserDriver.getNameList = async(f) => {
     let _url
     if(language == 'en'){
         _url = URL_NAME_LIST
-    }else if (language == 'fr') {}{
+    }else if (language == 'fr') {
         _url = URL_NAME_LIST_FR
     }
     browserDriver.getAlexaApi(_url,function (_body) {
@@ -224,7 +225,7 @@ browserDriver.getTODOList = async(listId,f) => {
     let _url
     if(language == 'en'){
         _url = URL_NAME_LIST
-    }else if (language == 'fr') {}{
+    }else if (language == 'fr') {
         _url = URL_NAME_LIST_FR
     }
     if (listId!=null){
@@ -238,7 +239,7 @@ browserDriver.getCardList = async(f) => {
     let _url
     if(language == 'en'){
         _url = URL_CARDS
-    }else if (language == 'fr') {}{
+    }else if (language == 'fr') {
         _url = URL_CARDS_FR
     }
     browserDriver.getAlexaApi(_url,function (_body) {
@@ -251,7 +252,7 @@ browserDriver.getHistory = async(f) => {
     let _url
     if(language == 'en'){
         _url = URL_HISTORY
-    }else if (language == 'fr') {}{
+    }else if (language == 'fr') {
         _url = URL_HISTORY_FR
     }
     browserDriver.getAlexaApi(_url,function (_body) {

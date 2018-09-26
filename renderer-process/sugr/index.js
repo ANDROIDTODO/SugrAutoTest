@@ -14,23 +14,26 @@ const stopTest = document.getElementById('stop')
 const choicePlayer = document.getElementById('choice_player')
 let isRetryGetDevices = false;
 
-layui.use('form', function(){
+let startStatus = -1
+
+layui.use('form', function () {
     var form = layui.form;
 
-    form.on('switch(console-scroll)', function(data){
+    form.on('switch(console-scroll)', function (data) {
         console.log(data.elem.checked); //开关是否开启，true或者false
-        ipcRenderer.send('switch-scroll',data.elem.checked)
+        ipcRenderer.send('switch-scroll', data.elem.checked)
+    });
+
+
+    form.on('select(notify-language)', function(data){
+        ipcRenderer.send('notify-language', data.value)
     });
 });
 
 
-
-
-
-
 stopTest.addEventListener('click', () => {
     console.log('click stop button!')
-    ipcRenderer.send('stop-click')
+    ipcRenderer.send('stop-test')
 
 
 })
@@ -53,48 +56,58 @@ startTest.addEventListener('click', () => {
 
     console.log('click start test button!')
     //采集信息
-    let _date
+    if (startStatus == -1) {
 
-    let sense_list = []
 
-    if ($('#sense_silence_cb').prop('checked')) {
-        sense_list.push('silence')
+        let _date
+
+        let sense_list = []
+
+        if ($('#sense_silence_cb').prop('checked')) {
+            sense_list.push('silence')
+        }
+
+        if ($('#sense_kitchen_cb').prop('checked')) {
+            sense_list.push('kitchen')
+        }
+
+        if ($('#sense_music_cb').prop('checked')) {
+            sense_list.push('music')
+        }
+
+        if ($('#sense_playback_cb').prop('checked')) {
+            sense_list.push('playback')
+        }
+
+        let _language = $('#language').val()
+
+        let language = []
+        language.push(_language)
+
+
+        let position = []
+
+        position.push($('input[name=\'position\']:checked').val())
+
+        _date = {
+            sense_list,
+            language,
+            position
+        }
+
+        console.log(_date)
+
+
+        ipcRenderer.send('start-test-click', _date)
+
+    }else if(startStatus == 1){
+        //暂停
+        ipcRenderer.send('pause-test')
+
+    }else if(startStatus == 0){
+        //继续
+        ipcRenderer.send('resume-test')
     }
-
-    if ($('#sense_kitchen_cb').prop('checked')) {
-        sense_list.push('kitchen')
-    }
-
-    if ($('#sense_music_cb').prop('checked')) {
-        sense_list.push('music')
-    }
-
-    if ($('#sense_playback_cb').prop('checked')) {
-        sense_list.push('playback')
-    }
-
-    let _language = $('#language').val()
-
-    let language = []
-    language.push(_language)
-
-
-    let position = []
-
-    position.push($('input[name=\'position\']:checked').val())
-
-    _date = {
-        sense_list,
-        language,
-        position
-    }
-
-    console.log(_date)
-
-    ipcRenderer.send('start-test-click',_date)
-    console.log(__dirname)
-
-
 })
 
 sn_confirm.addEventListener('click', function () {
@@ -137,7 +150,38 @@ ipcRenderer.on('alexa-no-devices', (event, noDevices) => {
 
 })
 
+ipcRenderer.on('start-test-response', (event) => {
+    stopTest.classList.remove('layui-btn-disabled')
+    $("#stop").removeAttr("disabled");
+    startTest.innerHTML = '暂停'
+    startStatus = 1
+})
 
+ipcRenderer.on('pause-test-response', (event) => {
+    startTest.innerHTML = '开始'
+    startStatus = 0
+})
+
+
+ipcRenderer.on('stop-test-response', (event) => {
+    stopTest.classList.add('layui-btn-disabled')
+    $("#stop").attr({"disabled": "disabled"});
+    startTest.innerHTML = '开始'
+    startStatus = -1
+})
+
+ipcRenderer.on('end-test-response', (event) => {
+    stopTest.classList.add('layui-btn-disabled')
+    $("#stop").attr({"disabled": "disabled"});
+    startTest.innerHTML = '开始'
+    startStatus = -1
+})
+
+//stopTest.classList.remove('layui-btn-disabled')
+//$("#stop").removeAttr("disabled");
+
+//stopTest.classList.add('layui-btn-disabled')
+//$("#stop").attr({"disabled": "disabled"});
 
 
 

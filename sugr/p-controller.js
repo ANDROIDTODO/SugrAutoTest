@@ -13,11 +13,12 @@ let apiParser
 let xlsx
 
 
-let currentUtteranceIndex = -1
+
 
 
 let deviceSerialNumber = null
 
+let currentUtteranceIndex = -1
 let currentLanguage = -1
 let currentPosition = -1
 let currentSense = -1
@@ -198,30 +199,28 @@ controller.setTodoListId = function (_todoListId) {
 
 
 controller.pause = function () {
-
+    clearTimeout(timer)
 }
 
-function reset() {
-    currentUtteranceIndex = -1
-    isNeedSilence = false
-    isNeedKitchen = false
-    isNeedMusic = false
-    isNeedPlayback = false
+controller.resume = function () {
+    currentUtteranceIndex--
+    next()
+}
 
-    position_330 = false
-    position_390 = false
-    position_930 = false
-    position_990 = false
+controller.reset = function reset() {
 
 
-    deviceSerialNumber = null
+     currentUtteranceIndex = -1
+     currentLanguage = -1
+     currentPosition = -1
+     currentSense = -1
+     allLanguage = []
+     position = []
+     sense = []
 
-    currentLanguage = -1
-    allLanguage = []
 
-    isDeviceUnderControll = false
 
-    todolistId = null
+
 }
 
 

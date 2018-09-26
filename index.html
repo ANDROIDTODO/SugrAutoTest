@@ -19,7 +19,7 @@
 
         <button class="layui-btn" id="alexa-login"> 登陆</button>
         <button class="layui-btn" id="start"> 开始</button>
-        <button class="layui-btn" id="stop"> 停止</button>
+        <button class="layui-btn layui-btn-disabled" disabled id="stop"> 停止</button>
         <button class="layui-btn" id="choice_player"> 选择播放器</button>
 
     </header>
@@ -47,7 +47,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">语言:&nbsp&nbsp</label>
             <div class="layui-input-block">
-                <select id="language" name="language" lay-verify="" style="width: 120px">
+                <select id="language" name="language" lay-verify="" lay-filter="notify-language" style="width: 120px">
                     <option value="en">英语</option>
                     <option value="de">德语</option>
                     <option value="spa">西班牙</option>

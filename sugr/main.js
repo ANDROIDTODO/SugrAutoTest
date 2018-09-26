@@ -33,13 +33,11 @@ controller.initialize(browersDriver,player,judge,mailer,apiParser,xlsx)
 
 let deviceSerialNumber
 
-let currentLanguage
-
-let isDeviceUnderControll = false
-
 let todolistId
 
+let currentLanguage = 'en'
 
+browersDriver.setLanguage(currentLanguage)
 
 
 /// *************************IpcMain************************
@@ -48,7 +46,7 @@ ipcMain.on('alexa-login-click',(event) => {
     // browersDriver.ap_email = "jeromeyang@sugrsugr.com"
     // browersDriver.ap_password = "jeromeyang@520"
 
-    browersDriver.setLanguage('fr')
+
     browersDriver.openBrowser((code,result) => {
         console.log(code)
 
@@ -96,8 +94,11 @@ ipcMain.on('start-test-click',(event,data) => {
         dialog.showErrorBox('错误', '请填写有效完整的序列号后确认！再点击开始')
     }else {
 
+        event.sender.send('start-test-response')
+
         //if(!isstart){
         //    isstart =  true
+
             controller.startTest(data,event.sender)
         //}else {
         //   judge.judge(0,'en',function (_data) {
@@ -117,12 +118,21 @@ ipcMain.on('refresh-devices-click',(event) => {
 
 })
 
-ipcMain.on('stop-click',(event) => {
-    judge.judge(2,'en',function (_data) {
-                    //将结果保存
-                    sender.send('console-event','result',JSON.stringify(_data))
-                    next()
-                })
+
+ipcMain.on('resume-test',(event) => {
+    controller.resume()
+    event.sender.send('start-test-response')
+})
+
+ipcMain.on('stop-test',(event) => {
+    controller.pause()
+    controller.reset()
+    event.sender.send('stop-test-response')
+})
+
+ipcMain.on('pause-test',(event) => {
+    controller.pause()
+    event.sender.send('pause-test-response')
 })
 
 ipcMain.on('reset-click',(event) => {
@@ -153,6 +163,12 @@ ipcMain.on('open-file-dialog', (event) => {
 
 ipcMain.on('switch-scroll',(event,_sc) =>{
     event.sender.send('console-scroll-controller',_sc)
+})
+
+ipcMain.on('notify-language',(event,_l) =>{
+    currentLanguage = _l
+    browersDriver.setLanguage(currentLanguage)
+    console.log(_l)
 })
 
 
