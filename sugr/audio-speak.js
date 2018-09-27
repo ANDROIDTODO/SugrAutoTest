@@ -46,7 +46,7 @@ speaker.play = function(_position,language,sense,index){
 	let __cmd = playScript + ' ' + playerPath + ' ' + playPath + '\\' + positionDir[_position] +'\\' +language + '\\' + sense + '\\' 
 				+ files[index]
 	console.log(__cmd)
-    // excute(__cmd)
+    excute(__cmd)
 }
 
 function excute(cmd_){

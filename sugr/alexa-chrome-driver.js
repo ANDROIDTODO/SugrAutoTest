@@ -117,16 +117,20 @@ browserDriver.openBrowser = async function (f) {
 
 
 
+        // try{
+        //     await driver.wait(until.titleIs('Please confirm your identity'),10000)
+        //     f(8,null)
+        // }catch (E){
+        //     console.log(E)
+        // }
+
         try{
-            await driver.wait(until.titleIs('Please confirm your identity'),10000)
-            f(8,null)
-        }catch (E){
+            await driver.wait(until.titleIs('Amazon Alexa'))
+        console.log('current title is Amazon alexa')
+        }catch(E){
             console.log(E)
         }
-
-
-        await driver.wait(until.titleIs('Amazon Alexa'))
-        console.log('current title is Amazon alexa')
+        
         // window.minimize()
 
         f(1, null)
