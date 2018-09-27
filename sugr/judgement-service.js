@@ -38,17 +38,17 @@ judge.judge = function (index,language,f) {
 
 
     browersDriver.getCardList((_data) => {
-        _card = apiParser.parseCardData(_data)
+        _card = apiParser.parseCardDataV2(_data,language,index)
         // 获取当前itemId最近一个的todo item（updatedDateTime，value）
         browersDriver.getTODOList(todolistId, (_data) => {
             _item = apiParser.parseTodoList(_data)
             browersDriver.getHistory(_data => {
                 _history = apiParser.parseHistory(_data)
 
-                let isWakeup
-                let heard
-                let answer
-                let isCorrect
+                let isWakeup = false
+                let heard = ''
+                let answer = ''
+                let isCorrect = false
                 //todoitem
 
                 if (_history != null){

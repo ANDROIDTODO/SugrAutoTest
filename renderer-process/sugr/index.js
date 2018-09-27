@@ -12,6 +12,7 @@ const sn_confirm = document.getElementById('sn-confirm')
 
 const stopTest = document.getElementById('stop')
 const choicePlayer = document.getElementById('choice_player')
+const clearLog = document.getElementById('clear-log')
 let isRetryGetDevices = false;
 
 let startStatus = -1
@@ -30,6 +31,9 @@ layui.use('form', function () {
     });
 });
 
+clearLog.addEventListener('click',() =>{
+    ipcRenderer.send('clear-log-click')
+})
 
 stopTest.addEventListener('click', () => {
     console.log('click stop button!')

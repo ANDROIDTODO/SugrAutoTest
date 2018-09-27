@@ -72,6 +72,10 @@ ipcRenderer.on('console-event-json', (event, level, text) => {
     }
 })
 
+ipcRenderer.on('console-clear-log',(event) =>{
+    recodeText.innerHTML = ''
+})
+
 function syntaxHighlight(json) {
     if (typeof json != 'string') {
         json = JSON.stringify(json, undefined, 2);

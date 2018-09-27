@@ -114,6 +114,89 @@ ApiParse.parseCardData = function (_data) {
     }
 }
 
+ApiParse.parseCardDataV2 = function (_data,_language,_index) {
+    let data = JSON.parse(_data)
+    let cards = data.cards
+    let _result = []
+
+    if (cards.length > 0) {
+        try {
+            console.log("parseCardData 1")
+            cards.forEach(v => {
+                //TODO 若没有发现则取第一个作为基准
+                
+
+                if (v.sourceDevice.serialNumber == deviceSerialNumber) {
+                    let heard
+                    let answer = ''
+                    let time
+                    let serialNumber
+
+                    console.log("parseCardData 2")
+                    if (v.playbackAudioAction != null) {
+                        heard = v.playbackAudioAction.mainText
+                    }
+
+                    if(_language == 'fr' && (_index == 4 || _index == 9 || _index == 14 || _index == 19 ||_index == 24 || _index == 29)){
+                        
+                            if(v.title != null){
+                                answer = v.title
+                            }
+                        
+                    }else{
+                        if (v.descriptiveText != null) {
+                            answer = v.descriptiveText[0]
+                        }
+                    }
+                    
+                    time = v.creationTimestamp
+                    serialNumber = v.sourceDevice.serialNumber
+
+
+                    let _card = {
+                        heard,
+                        answer,
+                        time,
+                        serialNumber
+                    }
+
+
+                    if (lastestCardCreateTime == -1) {
+                        sender.send('console-event', 'info', JSON.stringify(_card))
+                        console.log('parseCardData return 1')
+                        throw new Error('break')
+                    } else if (time <= lastestCardCreateTime) {
+                        lastestCardCreateTime = cards[0].creationTimestamp
+                        console.log('parseCardData return 2')
+                        sender.send('console-event', 'info', JSON.stringify(_result))
+                        throw new Error('break')
+                    } else {
+                        console.log('parseCardData return 3')
+                        _result.push(_card)
+                    }
+                }
+
+
+            })
+        } catch (e) {
+            console.log(e.message)
+        }
+
+        lastestCardCreateTime = cards[0].creationTimestamp
+        if (lastestCardCreateTime == -1) {
+            return null
+        } else {
+            if (_result.length == 0) {
+                return null
+            } else {
+                return _result
+            }
+
+        }
+
+    }
+}
+
 ApiParse.parseTodoList = function (_data) {
     let data = JSON.parse(_data)
     let list = data.list

@@ -129,6 +129,10 @@ browserDriver.openBrowser = async function (f) {
         console.log('current title is Amazon alexa')
         }catch(E){
             console.log(E)
+            driver.quit()
+            driver = null
+            f(2,null)
+            return
         }
         
         // window.minimize()

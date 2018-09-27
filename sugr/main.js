@@ -83,6 +83,10 @@ ipcMain.on('alexa-login-click',(event) => {
     })
 })
 
+ipcMain.on('clear-log-click',(event)=>{
+    event.sender.send('console-clear-log')
+})
+
 ipcMain.on('start-test-click',(event,data) => {
 
 

@@ -161,6 +161,7 @@ function next(){
 
                 judge.judge(currentUtteranceIndex,allLanguage[currentLanguage],function (_data) {
                     //将结果保存
+                    xlsx.saveResult(allLanguage[currentLanguage],position[currentPosition],sense[currentSense],currentUtteranceIndex)
                     sender.send('console-event','result',JSON.stringify(_data))
 
                     console.log("currentSense:"+currentSense+",(sense.length-1):"+(sense.length-1))
@@ -168,6 +169,10 @@ function next(){
                         currentSense++
                         currentUtteranceIndex = -1
                         next()
+                    }else{
+                        //所有测试结束
+                        console.log('测试结束')
+                        sender.send('console-test-end')
                     }
                     
                 })

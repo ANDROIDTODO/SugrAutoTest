@@ -8,6 +8,18 @@ let FR_workbook
 let EN_keyword = []
 let FR_keyword = []
 
+let position_index = {
+    "990":4,
+    "930":3,
+    "330":1,
+    "390":2,
+}
+
+let sense_index = {
+    'silence':3
+}
+
+
 
 function xlsx() {
 
@@ -46,6 +58,20 @@ xlsx.getKeyword = function (index) {
 xlsx.reset = function () {
     EN_workbook = null
     parseBook('en')
+}
+
+xlsx.saveResult = function(language,position,sense,index,_data){
+    let workbook
+    if(language == 'en'){
+        workbook = EN_workbook
+    }else if(language == 'fr'){
+        workbook = FR_workbook
+    }
+    let sheetName = workbook.SheetNames[position_index[position]]
+    let worksheet = EN_workbook.Sheets[sheetName]
+
+
+
 }
 
 function parse(index) {
