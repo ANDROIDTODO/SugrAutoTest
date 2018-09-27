@@ -17,6 +17,8 @@ let isRetryGetDevices = false;
 
 let startStatus = -1
 
+
+
 layui.use('form', function () {
     var form = layui.form;
 
@@ -44,7 +46,7 @@ stopTest.addEventListener('click', () => {
 
 choicePlayer.addEventListener('click', () => {
     console.log('click choicePlayer button!')
-    ipcRenderer.send('open-file-dialog')
+    ipcRenderer.send('choice-player')
 
 
 })
@@ -180,6 +182,20 @@ ipcRenderer.on('end-test-response', (event) => {
     startTest.innerHTML = '开始'
     startStatus = -1
 })
+
+
+ipcRenderer.send('get-cache-dir')
+ipcRenderer.send('get-player-path')
+
+ipcRenderer.on('cache-dir-response',(event,path)=>{
+    $("#cache-dir").innerHTML = path
+})
+
+ipcRenderer.on('player-path-response',(event,path)=>{
+    $("#palyer-path").innerHTML = path
+})
+
+
 
 //stopTest.classList.remove('layui-btn-disabled')
 //$("#stop").removeAttr("disabled");

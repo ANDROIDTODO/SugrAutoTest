@@ -13,9 +13,6 @@ let apiParser
 let xlsx
 
 
-
-
-
 let deviceSerialNumber = null
 
 let currentUtteranceIndex = -1
@@ -36,12 +33,14 @@ let timer
 
 let networkTimer
 
+let cacheDir
+
 
 function controller() {
 
 }
 
-controller.initialize = function (_browersDriver, _player, _judge, _emailer, _apiParser,_xlsx) {
+controller.initialize = function (_browersDriver, _player, _judge, _emailer, _apiParser, _xlsx) {
     browersDriver = _browersDriver
     player = _player
     judge = _judge
@@ -62,11 +61,11 @@ function startWithGetLastestData(f) {
     browersDriver.getCardList((_data) => {
         apiParser.parseCardData(_data)
         // 获取当前itemId最近一个的todo item（updatedDateTime，value）
-        browersDriver.getTODOList(todolistId,(_data) => {
+        browersDriver.getTODOList(todolistId, (_data) => {
             apiParser.parseTodoList(_data)
             browersDriver.getHistory(_data => {
                 apiParser.parseHistory(_data)
-                if(f!=null){
+                if (f != null) {
                     f()
                 }
 
@@ -80,14 +79,18 @@ controller.setSN = function (_sn) {
 }
 
 controller.setTodoListId = function (_id) {
-    todolistId  = _id
+    todolistId = _id
     //
 }
 
-controller.startTest = function (config,_sender) {
+controller.setCacheDir = function (_path) {
+    cacheDir = _path
+}
+
+controller.startTest = function (config, _sender) {
     sender = _sender
-    apiParser.setSender(_sender,deviceSerialNumber)
-    judge.init(browersDriver,apiParser,todolistId)
+    apiParser.setSender(_sender, deviceSerialNumber)
+    judge.init(browersDriver, apiParser, todolistId)
     start(config)
 
 }
@@ -106,8 +109,6 @@ function start(config) {
     // })
 
 
-
-
     sense = config.sense_list
     // _sense_list.forEach(value =>{
     //     //暂时支支持silence
@@ -119,12 +120,12 @@ function start(config) {
     currentLanguage = 0
     currentPosition = 0
     currentSense = 0
-    allLanguage  = config.language
+    allLanguage = config.language
 
     next()
 }
 
-function next(){
+function next() {
 
     // if(currentUtteranceIndex == -1){
     //     currentUtteranceIndex = currentUtteranceIndex+3
@@ -133,52 +134,52 @@ function next(){
     // }
 
     currentUtteranceIndex++
-    console.log("currentUtteranceIndex:"+ currentUtteranceIndex)
+    console.log("currentUtteranceIndex:" + currentUtteranceIndex)
     startWithGetLastestData(function () {
 
         // player
-        sender.send('console-event','debug',"语言："+allLanguage[currentLanguage]+"-位置：" +position[currentPosition]
-            +"-场景"+sense[currentSense] +"-第"+(currentUtteranceIndex+1)+"条对话--开始播放"
+        sender.send('console-event', 'debug', "语言：" + allLanguage[currentLanguage] + "-位置：" + position[currentPosition]
+            + "-场景" + sense[currentSense] + "-第" + (currentUtteranceIndex + 1) + "条对话--开始播放"
         )
         player.play(position[currentPosition],
-                    allLanguage[currentLanguage],
-                    sense[currentSense],
-                    currentUtteranceIndex
-            )
+            allLanguage[currentLanguage],
+            sense[currentSense],
+            currentUtteranceIndex
+        )
 
         timer = setTimeout(function () {
-            if(currentUtteranceIndex !=29){
+            if (currentUtteranceIndex != 29) {
 
                 //judge
                 //如果显示未被唤醒，则判断网络是否正常，
-                judge.judge(currentUtteranceIndex,allLanguage[currentLanguage],function (_data) {
+                judge.judge(currentUtteranceIndex, allLanguage[currentLanguage], function (_data) {
                     //将结果保存
-                    sender.send('console-event','result',JSON.stringify(_data))
+                    sender.send('console-event', 'result', JSON.stringify(_data))
                     next()
                 })
 
-            }else {
+            } else {
 
-                judge.judge(currentUtteranceIndex,allLanguage[currentLanguage],function (_data) {
+                judge.judge(currentUtteranceIndex, allLanguage[currentLanguage], function (_data) {
                     //将结果保存
-                    xlsx.saveResult(allLanguage[currentLanguage],position[currentPosition],sense[currentSense],currentUtteranceIndex)
-                    sender.send('console-event','result',JSON.stringify(_data))
+                    xlsx.saveResult(allLanguage[currentLanguage], position[currentPosition], sense[currentSense], currentUtteranceIndex)
+                    sender.send('console-event', 'result', JSON.stringify(_data))
 
-                    console.log("currentSense:"+currentSense+",(sense.length-1):"+(sense.length-1))
-                    if((sense.length-1) > currentSense){
+                    console.log("currentSense:" + currentSense + ",(sense.length-1):" + (sense.length - 1))
+                    if ((sense.length - 1) > currentSense) {
                         currentSense++
                         currentUtteranceIndex = -1
                         next()
-                    }else{
+                    } else {
                         //所有测试结束
                         console.log('测试结束')
                         sender.send('console-test-end')
                     }
-                    
+
                 })
                 console.log('切换场景')
             }
-        },15000)
+        }, 15000)
     })
 
 }
@@ -186,14 +187,14 @@ function next(){
 function judgeNetwork() {
     //用一个超大声音的唤醒词去唤醒，再去判断有无唤醒，若被唤醒，则继续next，没有就继续进行该项
     //play
-    
+
     setTimeout(function () {
-        
-    },10000)
-    
-    
+
+    }, 10000)
+
+
     setTimeout(function () {
-        
+
     })
 
 }
@@ -215,16 +216,20 @@ controller.resume = function () {
 controller.reset = function reset() {
 
 
-     currentUtteranceIndex = -1
-     currentLanguage = -1
-     currentPosition = -1
-     currentSense = -1
-     allLanguage = []
-     position = []
-     sense = []
+    currentUtteranceIndex = -1
+    currentLanguage = -1
+    currentPosition = -1
+    currentSense = -1
+    allLanguage = []
+    position = []
+    sense = []
+
+    xlsx.reset()
 
 
+}
 
+controller.saveFile = function () {
 
 }
 

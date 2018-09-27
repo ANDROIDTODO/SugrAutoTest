@@ -28,7 +28,7 @@ function xlsx() {
 
 }
 
-xlsx.initialize = function (path,chromeDriver,controller) {
+xlsx.initialize = function () {
     // EN_workbook = XLSX.readFile(path)
     // console.log(EN_workbook.SheetNames.length)
     // let sheetname = EN_workbook.SheetNames[0]
@@ -61,6 +61,8 @@ xlsx.getKeyword = function (index) {
 xlsx.reset = function () {
     EN_workbook = null
     parseBook('en')
+    FR_workbook = null
+    parseBook('fr')
 }
 
 xlsx.saveResult = function(language,position,sense,index,_data){
@@ -71,19 +73,22 @@ xlsx.saveResult = function(language,position,sense,index,_data){
         workbook = FR_workbook
     }
     let sheetName = workbook.SheetNames[position_index[position]]
+
     let worksheet = EN_workbook.Sheets[sheetName]
 
-    let cell_answer = worksheet['B'+(sense_index[sense]+index)]
-    cell_answer.v = _data.answer
+    worksheet['B'+(sense_index[sense]+index)] = {v:_data.answer}
+    worksheet['C'+(sense_index[sense]+index)] = {v:_data.isWakeup?1:0}
+    worksheet['D'+(sense_index[sense]+index)] = {v:_data.isCorrect?1:0}
+    worksheet['E'+(sense_index[sense]+index)] = {v:_data.heard}
 
-    let cell_frr = worksheet['C'+(sense_index[sense]+index)]
-    cell_frr.v = _data.isWakeup?1:0
+}
 
-    let cell_far = worksheet['D'+(sense_index[sense]+index)]
-    cell_far.v = _data.isCorrect?1:0
-
-    let cell_heard = worksheet['E'+(sense_index[sense]+index)]
-    cell_heard.v = _data.heard
+xlsx.saveFile = function (language,path) {
+    if (language == 'en'){
+        XLSX.writeFile(EN_workbook, path);
+    }else if(language == 'fr'){
+        XLSX.writeFile(FR_workbook, path);
+    }
 }
 
 function parse(index) {
@@ -119,11 +124,11 @@ function parseBook(index) {
     let workbook = null
     if (index == 'en'){
         let xlsxPath = path.join(__dirname,'../assets/config/EN-US.xlsx');
-        workbook = XLSX.readFile(xlsxPath)
+        workbook = XLSX.readFile(xlsxPath,{cellStyles:true})
         EN_workbook = workbook
     } else if(index == 'fr'){
         let xlsxPath = path.join(__dirname,'../assets/config/FR.xlsx');
-        workbook = XLSX.readFile(xlsxPath)
+        workbook = XLSX.readFile(xlsxPath,{cellStyles:true})
         FR_workbook = workbook
     }
 

@@ -21,11 +21,12 @@ const controller = require('./p-controller')
 
 player.setPlayerPath(settings.get('playerPath'))
 console.log(settings.get('playerPath'))
+
+controller.setCacheDir(settings.get('cacheDir'))
+
 //xlsx
 const xlsx = require('./excelmanager')
-let xlsxPath = path.join(__dirname,'../assets/config/EN-US.xlsx');
-
-xlsx.initialize(xlsxPath,null,null)
+xlsx.initialize()
 
 controller.initialize(browersDriver,player,judge,mailer,apiParser,xlsx)
 
@@ -152,7 +153,7 @@ ipcMain.on('confirm-device-sn',(event,sn) => {
 })
 
 
-ipcMain.on('open-file-dialog', (event) => {
+ipcMain.on('choice-player', (event) => {
   dialog.showOpenDialog({
     properties: ['openFile']
   }, (files) => {
@@ -165,6 +166,20 @@ ipcMain.on('open-file-dialog', (event) => {
   })
 })
 
+
+ipcMain.on('choice-cache-dir', (event) => {
+    dialog.showOpenDialog({
+        properties: ['openDirectory']
+    }, (files) => {
+        if (files) {
+            let cacheDir = files[0]
+            console.log(cacheDir)
+            settings.set('cacheDir',cacheDir)
+            controller.setCacheDir(cacheDir)
+        }
+    })
+})
+
 ipcMain.on('switch-scroll',(event,_sc) =>{
     event.sender.send('console-scroll-controller',_sc)
 })
@@ -173,6 +188,14 @@ ipcMain.on('notify-language',(event,_l) =>{
     currentLanguage = _l
     browersDriver.setLanguage(currentLanguage)
     console.log(_l)
+})
+
+ipcMain.on('get-cache-dir',(event)=>{
+    event.sender.send('cache-dir-response',settings.get('cacheDir'))
+})
+
+ipcMain.on('get-player-path',(event)=>{
+    event.sender.send('player-path-response',settings.get('playerPath'))
 })
 
 
