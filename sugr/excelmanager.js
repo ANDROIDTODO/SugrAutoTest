@@ -16,7 +16,10 @@ let position_index = {
 }
 
 let sense_index = {
-    'silence':3
+    'silence':3,
+    'kitchen':36,
+    'music':69,
+    'playback':102
 }
 
 
@@ -70,8 +73,17 @@ xlsx.saveResult = function(language,position,sense,index,_data){
     let sheetName = workbook.SheetNames[position_index[position]]
     let worksheet = EN_workbook.Sheets[sheetName]
 
+    let cell_answer = worksheet['B'+(sense_index[sense]+index)]
+    cell_answer.v = _data.answer
 
+    let cell_frr = worksheet['C'+(sense_index[sense]+index)]
+    cell_frr.v = _data.isWakeup?1:0
 
+    let cell_far = worksheet['D'+(sense_index[sense]+index)]
+    cell_far.v = _data.isCorrect?1:0
+
+    let cell_heard = worksheet['E'+(sense_index[sense]+index)]
+    cell_heard.v = _data.heard
 }
 
 function parse(index) {
