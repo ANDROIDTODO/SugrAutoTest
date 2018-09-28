@@ -155,7 +155,7 @@ browserDriver.openBrowser = async function (f) {
 
 
 
-        // await driver.wait(until.titleIs('xxxxxx'))
+        await driver.wait(until.titleIs('xxxxxx'))
         console.log('waiting end')
     } catch (e) {
         console.log(e)

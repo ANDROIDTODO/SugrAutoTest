@@ -38,7 +38,6 @@ let currentLanguage = 'en'
 
 browersDriver.setLanguage(currentLanguage)
 
-
 /// *************************IpcMain************************
 ipcMain.on('alexa-login-click',(event) => {
 
@@ -84,6 +83,8 @@ ipcMain.on('alexa-login-click',(event) => {
 
 ipcMain.on('clear-log-click',(event)=>{
     event.sender.send('console-clear-log')
+    
+
 })
 
 ipcMain.on('start-test-click',(event,data) => {
@@ -136,6 +137,12 @@ ipcMain.on('stop-test',(event) => {
 ipcMain.on('pause-test',(event) => {
     controller.pause()
     event.sender.send('pause-test-response')
+})
+
+ipcMain.on('end-test',(event) => {
+    controller.pause()
+    controller.reset()
+    event.sender.send('stop-test-response')
 })
 
 ipcMain.on('reset-click',(event) => {

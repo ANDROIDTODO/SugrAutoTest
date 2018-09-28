@@ -80,7 +80,7 @@ xlsx.saveResult = function(language,position,sense,index,_data){
     worksheet['C'+(sense_index[sense]+index)] = {v:_data.isWakeup?1:0}
     worksheet['D'+(sense_index[sense]+index)] = {v:_data.isCorrect?1:0}
     worksheet['E'+(sense_index[sense]+index)] = {v:_data.heard}
-
+    
 }
 
 xlsx.saveFile = function (language,path) {
@@ -106,9 +106,6 @@ function parse(index) {
 
         keyword.push(arr)
     }
-
-
-
 
 
     if(index == 'en'){

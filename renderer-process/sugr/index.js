@@ -201,6 +201,10 @@ ipcRenderer.on('player-path-response',(event,path)=>{
     $("#palyer-path").text(path)
 })
 
+ipcRenderer.on('console-test-end',(event)=>{
+    ipcRenderer.send('end-test')
+})
+
 
 
 //stopTest.classList.remove('layui-btn-disabled')
