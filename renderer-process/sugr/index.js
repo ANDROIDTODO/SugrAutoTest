@@ -13,6 +13,7 @@ const sn_confirm = document.getElementById('sn-confirm')
 const stopTest = document.getElementById('stop')
 const choicePlayer = document.getElementById('choice_player')
 const clearLog = document.getElementById('clear-log')
+const choiceCacheDir = document.getElementById('choice-cache-dir')
 let isRetryGetDevices = false;
 
 let startStatus = -1
@@ -32,6 +33,10 @@ layui.use('form', function () {
         ipcRenderer.send('notify-language', data.value)
     });
 });
+
+choiceCacheDir.addEventListener('click',()=>{
+  ipcRenderer.send('choice-cache-dir')
+})
 
 clearLog.addEventListener('click',() =>{
     ipcRenderer.send('clear-log-click')
@@ -188,11 +193,12 @@ ipcRenderer.send('get-cache-dir')
 ipcRenderer.send('get-player-path')
 
 ipcRenderer.on('cache-dir-response',(event,path)=>{
-    $("#cache-dir").innerHTML = path
+    console.log('cache-dir-response:'+path)
+    $("#cache-dir").text(path)
 })
 
 ipcRenderer.on('player-path-response',(event,path)=>{
-    $("#palyer-path").innerHTML = path
+    $("#palyer-path").text(path)
 })
 
 

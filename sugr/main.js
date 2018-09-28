@@ -30,8 +30,6 @@ xlsx.initialize()
 
 controller.initialize(browersDriver,player,judge,mailer,apiParser,xlsx)
 
-
-
 let deviceSerialNumber
 
 let todolistId
@@ -162,6 +160,7 @@ ipcMain.on('choice-player', (event) => {
       console.log(playerPath)
       settings.set('playerPath',playerPath)
       player.setPlayerPath(playerPath)
+      event.sender.send('player-path-response',playerPath)
     }
   })
 })
@@ -171,11 +170,13 @@ ipcMain.on('choice-cache-dir', (event) => {
     dialog.showOpenDialog({
         properties: ['openDirectory']
     }, (files) => {
+        console.log(files)
         if (files) {
             let cacheDir = files[0]
             console.log(cacheDir)
             settings.set('cacheDir',cacheDir)
             controller.setCacheDir(cacheDir)
+            event.sender.send('cache-dir-response',cacheDir)
         }
     })
 })
@@ -195,6 +196,7 @@ ipcMain.on('get-cache-dir',(event)=>{
 })
 
 ipcMain.on('get-player-path',(event)=>{
+    console.log('get-player-path')
     event.sender.send('player-path-response',settings.get('playerPath'))
 })
 

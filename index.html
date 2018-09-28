@@ -37,19 +37,26 @@
         <div class="layui-form-item">
             <label class="layui-form-label">是否滚动:&nbsp&nbsp</label>
             <div class="layui-input-block">
-                <input id="console-scroll" lay-filter="console-scroll" type="checkbox" name="controller" lay-skin="switch" lay-text="开启|关闭" checked>
+                <input id="console-scroll" lay-filter="console-scroll" type="checkbox" name="controller"
+                       lay-skin="switch" lay-text="开启|关闭" checked>
             </div>
         </div>
     </form>
 
-    
-        <div class="layui-form-item">
-            <label class="layui-form-label">清除日志:&nbsp&nbsp</label>
-            <div class="layui-input-block">
-                <button class="layui-btn" id="clear-log"> 清除</button>
-            </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">清除日志:&nbsp&nbsp</label>
+        <div class="layui-input-block">
+            <button class="layui-btn" id="clear-log"> 清除</button>
         </div>
-   
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">缓存目录:&nbsp&nbsp</label>
+        <div class="layui-input-block">
+            <button class="layui-btn" id="choice-cache-dir"> 选择</button>
+        </div>
+    </div>
 
 
     <form class="layui-form" action="">
@@ -118,7 +125,7 @@
     <label class="layui-form-label">缓存路径:&nbsp&nbsp</label>
     <div class="layui-input-block">
         <div class="layui-input-block" style="display: inline-flex;">
-
+            <label id="cache-dir" class="layui-form-label" style="text-align: left;padding-left: 0"></label>
 
         </div>
     </div>
@@ -132,9 +139,9 @@
 <script src="assets/layui/layui.all.js"></script>
 <script src="assets/jquery/jquery.min.js"></script>
 <script>
-    require('./assets/imports')
-    require('./assets/nav')
-    require('./renderer-process/sugr/index')
+  require('./assets/imports')
+  require('./assets/nav')
+  require('./renderer-process/sugr/index')
 </script>
 <script>
 
