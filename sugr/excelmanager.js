@@ -81,6 +81,11 @@ xlsx.saveResult = function(language,position,sense,index,_data){
     worksheet['D'+(sense_index[sense]+index)] = {v:_data.isCorrect?1:0}
     worksheet['E'+(sense_index[sense]+index)] = {v:_data.heard}
     
+    if(language == 'en'){
+        EN_workbook = workbook
+    }else if(language == 'fr'){
+        FR_workbook = workbook
+    }
 }
 
 xlsx.saveFile = function (language,path) {

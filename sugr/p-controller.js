@@ -159,6 +159,7 @@ function next() {
                 judge.judge(currentUtteranceIndex, allLanguage[currentLanguage], function (_data) {
                     //将结果保存
                     sender.send('console-event', 'result', JSON.stringify(_data))
+                    xlsx.saveResult(allLanguage[currentLanguage], position[currentPosition], sense[currentSense], currentUtteranceIndex,_data)
                     next()
                 })
 
@@ -166,21 +167,20 @@ function next() {
 
                 judge.judge(currentUtteranceIndex, allLanguage[currentLanguage], function (_data) {
                     //将结果保存
-                    xlsx.saveResult(allLanguage[currentLanguage], position[currentPosition], sense[currentSense], currentUtteranceIndex)
                     sender.send('console-event', 'result', JSON.stringify(_data))
-
+                    xlsx.saveResult(allLanguage[currentLanguage], position[currentPosition], sense[currentSense], currentUtteranceIndex,_data)
                     console.log("currentSense:" + currentSense + ",(sense.length-1):" + (sense.length - 1))
                     if ((sense.length - 1) > currentSense) {
                         currentSense++
                         currentUtteranceIndex = -1
                         //这里判断是否为playback
-                        if(sense[currentSense] == 'playback'){
-                            //根据不同语言
-                            //播放play happy //如何通过API知道当前确实已经开始播放音乐，而且是happy
-                            //播放loop mode on // 通过API知道loop mode on ,预测history
-                            //当测试完毕后，需要stop music
+                        // if(sense[currentSense] == 'playback'){
+                        //     //根据不同语言
+                        //     //播放play happy //如何通过API知道当前确实已经开始播放音乐，而且是happy
+                        //     //播放loop mode on // 通过API知道loop mode on ,预测history
+                        //     //当测试完毕后，需要stop music
 
-                        }
+                        // }
 
 
                         next()
@@ -213,6 +213,15 @@ function judgeNetwork() {
 
     })
 
+}
+
+function playHappy(language){
+
+
+
+    setInterval(()=>{
+        //判断是否有播放
+    },20000)
 }
 
 controller.setTodoListId = function (_todoListId) {
