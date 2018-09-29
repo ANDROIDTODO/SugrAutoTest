@@ -26,7 +26,7 @@ controller.setCacheDir(settings.get('cacheDir'))
 
 //xlsx
 const xlsx = require('./excelmanager')
-xlsx.initialize()
+
 
 controller.initialize(browersDriver,player,judge,mailer,apiParser,xlsx)
 

@@ -92,6 +92,9 @@ controller.setCacheDir = function (_path) {
 }
 
 controller.startTest = function (config, _sender) {
+
+    xlsx.initialize()
+    xlsx.reset()
     sender = _sender
     apiParser.setSender(_sender, deviceSerialNumber)
     judge.init(browersDriver, apiParser, todolistId)
@@ -249,7 +252,7 @@ controller.reset = function reset() {
     position = []
     sense = []
 
-    xlsx.reset()
+
 
 
 }
