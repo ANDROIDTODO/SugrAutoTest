@@ -98,7 +98,23 @@ startTest.addEventListener('click', () => {
 
         let position = []
 
-        position.push($('input[name=\'position\']:checked').val())
+        // position.push($('input[name=\'position\']:checked').val())
+
+        if ($('#position_990_cb').prop('checked')) {
+            position.push('990')
+        }
+
+        if ($('#position_930_cb').prop('checked')) {
+            position.push('930')
+        }
+
+        if ($('#position_330_cb').prop('checked')) {
+            position.push('330')
+        }
+
+        if ($('#position_390_cb').prop('checked')) {
+            position.push('390')
+        }
 
         _date = {
             sense_list,

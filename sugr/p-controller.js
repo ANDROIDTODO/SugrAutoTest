@@ -180,6 +180,7 @@ function next() {
                     if ((sense.length - 1) > currentSense) {
                         currentSense++
                         currentUtteranceIndex = -1
+                        console.log('切换场景')
                         //这里判断是否为playback
                         // if(sense[currentSense] == 'playback'){
                         //     //根据不同语言
@@ -214,7 +215,7 @@ function next() {
                     }
 
                 })
-                console.log('切换场景')
+
             }
         }, 18000)
     })
