@@ -20,6 +20,12 @@ const URL_NAME_LIST_FR = 'https://alexa.amazon.fr/api/namedLists'
 const URL_CARDS_FR = 'https://alexa.amazon.fr/api/cards'
 const URL_HISTORY_FR = 'https://alexa.amazon.fr/api/activities?startTime=&size=50&offset=-1'
 
+const URL_LOGIN_DE = "https://alexa.amazon.de/"
+const URL_DEVICE_LIST_DE = 'https://alexa.amazon.de/api/devices-v2/device'
+const URL_NAME_LIST_DE = 'https://alexa.amazon.de/api/namedLists'
+const URL_CARDS_DE = 'https://alexa.amazon.de/api/cards'
+const URL_HISTORY_DE = 'https://alexa.amazon.de/api/activities?startTime=&size=50&offset=-1'
+
 let driver = null
 let window = null
 let chromeOptions = null
@@ -66,6 +72,8 @@ browserDriver.openBrowser = async function (f) {
         url = URL_LOGIN
     }else if (language == 'fr') {
         url = URL_LOGIN_FR
+    }else if (language == 'de'){
+        url = URL_LOGIN_DE
     }
 
     try {
@@ -173,6 +181,8 @@ browserDriver.getDeviceOnlineList = async(f) => {
         _url = URL_DEVICE_LIST
     }else if (language == 'fr') {
         _url = URL_DEVICE_LIST_FR
+    }else if (language == 'de'){
+        _url = URL_DEVICE_LIST_DE
     }
 
 
@@ -214,6 +224,8 @@ browserDriver.getNameList = async(f) => {
         _url = URL_NAME_LIST
     }else if (language == 'fr') {
         _url = URL_NAME_LIST_FR
+    }else if (language == 'de') {
+        _url = URL_NAME_LIST_DE
     }
     browserDriver.getAlexaApi(_url,function (_body) {
         console.log(_body)
@@ -235,6 +247,8 @@ browserDriver.getTODOList = async(listId,f) => {
         _url = URL_NAME_LIST
     }else if (language == 'fr') {
         _url = URL_NAME_LIST_FR
+    }else if (language == 'de') {
+        _url = URL_NAME_LIST_DE
     }
     if (listId!=null){
         browserDriver.getAlexaApi(_url+'/'+listId+'/items',function (_body) {
@@ -249,6 +263,8 @@ browserDriver.getCardList = async(f) => {
         _url = URL_CARDS
     }else if (language == 'fr') {
         _url = URL_CARDS_FR
+    }else if (language == 'de') {
+        _url = URL_CARDS_DE
     }
     browserDriver.getAlexaApi(_url,function (_body) {
         f(_body)
@@ -262,6 +278,8 @@ browserDriver.getHistory = async(f) => {
         _url = URL_HISTORY
     }else if (language == 'fr') {
         _url = URL_HISTORY_FR
+    }else if (language == 'de') {
+        _url = URL_HISTORY_DE
     }
     browserDriver.getAlexaApi(_url,function (_body) {
         f(_body)

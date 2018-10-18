@@ -41,8 +41,8 @@ browersDriver.setLanguage(currentLanguage)
 /// *************************IpcMain************************
 ipcMain.on('alexa-login-click',(event) => {
 
-    // browersDriver.ap_email = "jeromeyang@sugrsugr.com"
-    // browersDriver.ap_password = "jeromeyang@520"
+    browersDriver.ap_email = "sugr@sugrsugr.com"
+    browersDriver.ap_password = "Sugr140331"
 
 
     browersDriver.openBrowser((code,result) => {

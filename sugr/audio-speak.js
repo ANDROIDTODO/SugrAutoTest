@@ -49,6 +49,10 @@ speaker.play = function(_position,language,sense,index){
     excute(__cmd)
 }
 
+speaker.playback = function(language,which){
+	
+}
+
 function excute(cmd_){
 	cmd.get(cmd_,function(err,data,stderr){
                                console.log(err)

@@ -4,9 +4,10 @@ const path = require('path')
 
 let EN_workbook
 let FR_workbook
-
+let DE_workbook
 let EN_keyword = []
 let FR_keyword = []
+let DE_keyword = []
 
 let position_index = {
     "990":4,
@@ -45,7 +46,7 @@ xlsx.initialize = function () {
 
     parse('en')
     parse('fr')
-
+    parse('de')
 
 }
 
@@ -56,6 +57,9 @@ xlsx.getKeyword = function (index) {
     else if(index == 'fr'){
         return FR_keyword
     }
+    else if(index == 'de'){
+        return DE_keyword
+    }
 }
 
 xlsx.reset = function () {
@@ -63,6 +67,8 @@ xlsx.reset = function () {
     parseBook('en')
     FR_workbook = null
     parseBook('fr')
+    DE_workbook = null
+    parseBook('de')
 }
 
 xlsx.saveResult = function(language,position,sense,index,_data){
@@ -71,10 +77,12 @@ xlsx.saveResult = function(language,position,sense,index,_data){
         workbook = EN_workbook
     }else if(language == 'fr'){
         workbook = FR_workbook
+    }else if(language == 'de'){
+        workbook = DE_workbook
     }
     let sheetName = workbook.SheetNames[position_index[position]]
 
-    let worksheet = EN_workbook.Sheets[sheetName]
+    let worksheet = workbook.Sheets[sheetName]
 
     worksheet['B'+(sense_index[sense]+index)] = {v:_data.answer}
     worksheet['C'+(sense_index[sense]+index)] = {v:_data.isWakeup?1:0}
@@ -85,6 +93,8 @@ xlsx.saveResult = function(language,position,sense,index,_data){
         EN_workbook = workbook
     }else if(language == 'fr'){
         FR_workbook = workbook
+    }else if(language == 'de'){
+        DE_workbook = workbook
     }
 }
 
@@ -93,6 +103,8 @@ xlsx.saveFile = function (language,path) {
         XLSX.writeFile(EN_workbook, path);
     }else if(language == 'fr'){
         XLSX.writeFile(FR_workbook, path);
+    }else if(language == 'de'){
+        XLSX.writeFile(DE_workbook, path);
     }
 }
 
@@ -115,11 +127,13 @@ function parse(index) {
 
     if(index == 'en'){
         EN_keyword = keyword
-    } else if (index == 'fr') {}{
+    } else if (index == 'fr'){
         FR_keyword = keyword
+    } else if (index == 'de'){
+        DE_keyword = keyword
     }
 
-    console.log(FR_keyword)
+    console.log(DE_keyword)
 }
 
 function parseBook(index) {
@@ -132,6 +146,10 @@ function parseBook(index) {
         let xlsxPath = path.join(__dirname,'../assets/config/FR.xlsx');
         workbook = XLSX.readFile(xlsxPath,{cellStyles:true})
         FR_workbook = workbook
+    }else if(index == 'de'){
+        let xlsxPath = path.join(__dirname,'../assets/config/DE.xlsx');
+        workbook = XLSX.readFile(xlsxPath,{cellStyles:true})
+        DE_workbook = workbook
     }
 
     return workbook
