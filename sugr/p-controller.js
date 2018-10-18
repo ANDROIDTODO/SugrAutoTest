@@ -39,6 +39,10 @@ let networkTimer
 
 let cacheDir
 
+let isLoopModeOn
+let isPlayMusic
+let isMusicStop
+
 
 function controller() {
 
@@ -179,7 +183,7 @@ function next() {
                         //这里判断是否为playback
                         // if(sense[currentSense] == 'playback'){
                         //     //根据不同语言
-                        //     //播放play happy //如何通过API知道当前确实已经开始播放音乐，而且是happy
+                        //     //播放play happy //如何通过API知道当前确实已经开始播放音乐，而且是happy,可能会存在streaming on other device
                         //     //播放loop mode on // 通过API知道loop mode on ,预测history
                         //     //当测试完毕后，需要stop music
 
@@ -188,17 +192,31 @@ function next() {
 
                         next()
                     } else {
-                        //所有测试结束
-                        controller.saveFile()
-                        console.log('测试结束')
-                        sender.send('console-test-end')
+
+                        //切换位置
+                        //场景要归位
+                        if((position.length -1) > currentPosition){
+                            currentPosition++
+                            currentUtteranceIndex = -1
+                            currentSense = 0
+                            next()
+
+                        }else {
+                            //所有测试结束
+                            controller.saveFile()
+                            console.log('测试结束')
+                            sender.send('console-event', 'result', '测试完毕！！！ ')
+                            sender.send('console-test-end')
+                        }
+
+
 
                     }
 
                 })
                 console.log('切换场景')
             }
-        }, 15000)
+        }, 18000)
     })
 
 }
