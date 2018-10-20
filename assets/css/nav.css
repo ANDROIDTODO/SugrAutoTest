@@ -13,6 +13,7 @@
 .nav.is-shown {
   visibility: visible;;
   opacity: 1;
+  display: block;
 }
 
 .nav-header {

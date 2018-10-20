@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="./assets/layui/css/layui.css">
 
     <link rel="import" href="sections/sugr/console.html">
+    <link rel="import" href="sections/sugr/choice.html"/>
 
 </head>
 <body>
 
 
-<nav class="nav js-nav">
+<nav class="nav js-nav ">
     <header class="nav-header">
 
         <button class="layui-btn" id="alexa-login"> 登陆</button>
@@ -91,10 +92,10 @@
             <label class="layui-form-label">位置:&nbsp&nbsp</label>
             <div class="layui-input-block">
                 <div class="layui-input-block">
-                    <input id="position_990_cb" type="checkbox" name="position" lay-skin="primary" value="990" title="990" checked>
-                    <input id="position_930_cb" type="checkbox" name="position" lay-skin="primary" value="930" title="930">
-                    <input id="position_330_cb" type="checkbox" name="position" lay-skin="primary" value="330" title="330">
-                    <input id="position_390_cb" type="checkbox" name="position" lay-skin="primary" value="390" title="390">
+                    <input id="position_990_cb" type="checkbox" name="position" lay-skin="primary" value="990" title="990&nbsp&nbsp&nbsp&nbsp&nbsp" checked>
+                    <input id="position_930_cb" type="checkbox" name="position" lay-skin="primary" value="930" title="930&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp">
+                    <input id="position_330_cb" type="checkbox" name="position" lay-skin="primary" value="330" title="330&nbsp&nbsp&nbsp&nbsp">
+                    <input id="position_390_cb" type="checkbox" name="position" lay-skin="primary" value="390" title="390     ">
 
 
                 </div>
@@ -108,8 +109,8 @@
         <div class="layui-input-block" style="display: inline-flex;">
 
             <input id="serialNumber" type="text" name="serialNumber" lay-verify="required"
-                   style="width: 230px;font-size: 15px"
-                   placeholder="请登录后填写控制台输出的serialNumber" autocomplete="off" class="layui-input">
+                   style="width: 230px;font-size: 12px"
+                   placeholder="登录后填写控制台输出的serialNumber" autocomplete="off" class="layui-input">
             <button class="layui-btn layui-btn-disabled" disabled id="sn-confirm"> 确定</button>
         </div>
     </div>
@@ -134,7 +135,7 @@
 
 </nav>
 
-<main class="content js-content"></main>
+<main class="content js-content" ></main>
 
 <script src="assets/layui/layui.all.js"></script>
 <script src="assets/jquery/jquery.min.js"></script>
