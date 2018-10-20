@@ -182,13 +182,16 @@ function next() {
                         currentUtteranceIndex = -1
                         console.log('切换场景')
                         //这里判断是否为playback
-                        // if(sense[currentSense] == 'playback'){
-                        //     //根据不同语言
-                        //     //播放play happy //如何通过API知道当前确实已经开始播放音乐，而且是happy,可能会存在streaming on other device
-                        //     //播放loop mode on // 通过API知道loop mode on ,预测history
-                        //     //当测试完毕后，需要stop music
+                        if(sense[currentSense] == 'playback'){
 
-                        // }
+                            //根据不同语言
+                            //播放play happy //如何通过API知道当前确实已经开始播放音乐，而且是happy,可能会存在streaming on other device
+                            //播放loop mode on // 通过API知道loop mode on ,预测history
+                            //是否能够根据api查看是否现在正在播放
+
+                            //当测试完毕后，需要stop music
+
+                        }
 
 
                         next()

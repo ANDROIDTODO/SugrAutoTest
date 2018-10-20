@@ -21,6 +21,28 @@ let positionDir = {
 	'390':'position_390'
 }
 
+let playHappyRes = {
+	'en':"",
+	'de':"",
+	"fr":"",
+	'spa':""
+
+}
+
+let loopModeOnRes = {
+    'en':"",
+    'de':"",
+    "fr":"",
+    'spa':""
+}
+
+let alexaStopRes = {
+    'en':"",
+    'de':"",
+    "fr":"",
+    'spa':""
+}
+
 function speaker () {
 
 }
