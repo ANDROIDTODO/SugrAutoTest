@@ -13,23 +13,29 @@ const URL_DEVICE_LIST = 'https://alexa.amazon.com/api/devices-v2/device'
 const URL_NAME_LIST = 'https://alexa.amazon.com/api/namedLists'
 const URL_CARDS = 'https://alexa.amazon.com/api/cards'
 const URL_HISTORY = 'https://alexa.amazon.com/api/activities?startTime=&size=50&offset=-1'
+const URL_PLAYER = 'https://alexa.amazon.com/api/np/player?deviceSerialNumber='
 
 const URL_LOGIN_FR = "https://alexa.amazon.fr/"
 const URL_DEVICE_LIST_FR = 'https://alexa.amazon.fr/api/devices-v2/device'
 const URL_NAME_LIST_FR = 'https://alexa.amazon.fr/api/namedLists'
 const URL_CARDS_FR = 'https://alexa.amazon.fr/api/cards'
 const URL_HISTORY_FR = 'https://alexa.amazon.fr/api/activities?startTime=&size=50&offset=-1'
+const URL_PLAYER_FR = 'https://alexa.amazon.fr/api/np/player?deviceSerialNumber='
+
 
 const URL_LOGIN_DE = "https://alexa.amazon.de/"
 const URL_DEVICE_LIST_DE = 'https://alexa.amazon.de/api/devices-v2/device'
 const URL_NAME_LIST_DE = 'https://alexa.amazon.de/api/namedLists'
 const URL_CARDS_DE = 'https://alexa.amazon.de/api/cards'
 const URL_HISTORY_DE = 'https://alexa.amazon.de/api/activities?startTime=&size=50&offset=-1'
+const URL_PLAYER_DE = 'https://alexa.amazon.de/api/np/player?deviceSerialNumber='
 
 let driver = null
 let window = null
 let chromeOptions = null
 let language = null
+
+let deviceSnTypeMap = []
 
 // 我们需要给出算法库的版本等等
 
@@ -204,12 +210,15 @@ browserDriver.getDeviceOnlineList = async(f) => {
                 let accountName = v.accountName
                 let deviceTypeFriendlyName = v.deviceTypeFriendlyName
                 let online = v.online
+                let deviceType = v.deviceType
                 let result = {
                     serialNumber,
                     accountName,
                     deviceTypeFriendlyName,
+                    deviceType,
                     online,
                 }
+                deviceSnTypeMap[serialNumber] = deviceType
                 _result.push(result)
             }
         })
@@ -284,6 +293,23 @@ browserDriver.getHistory = async(f) => {
     browserDriver.getAlexaApi(_url,function (_body) {
         f(_body)
     })
+}
+
+browserDriver.getPlayerInfo = async(sn,f) => {
+
+    let _url
+    if(language == 'en'){
+        _url = URL_PLAYER
+    }else if (language == 'fr') {
+        _url = URL_PLAYER_FR
+    }else if (language == 'de') {
+        _url = URL_PLAYER_DE
+    }
+
+    browserDriver.getAlexaApi(_url+sn+'&deviceType='+deviceSnTypeMap[sn],function (_body) {
+        f(_body)
+    })
+
 }
 
 

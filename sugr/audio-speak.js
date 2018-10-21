@@ -73,6 +73,9 @@ speaker.play = function(_position,language,sense,index){
 
 speaker.playback = function(language,which){
 	
+	let ___cmd = playScript + ' ' + playerPath + ' ' + playPath +'\\pb_cmd' + '\\' + language +'\\' + which + '.m4a'
+	console.log(___cmd)
+    excute(___cmd)
 }
 
 function excute(cmd_){

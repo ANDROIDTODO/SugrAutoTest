@@ -18,6 +18,7 @@ let xlsx
 
 
 let deviceSerialNumber = null
+let deviceType = null
 
 let currentUtteranceIndex = -1
 let currentLanguage = -1
@@ -39,9 +40,9 @@ let networkTimer
 
 let cacheDir
 
-let isLoopModeOn
-let isPlayMusic
-let isMusicStop
+let isLoopModeOn = false
+let isPlayMusic = false
+let isMusicStop = true
 
 
 function controller() {
@@ -132,7 +133,9 @@ function start(config) {
     currentPosition = 0
     currentSense = 0
     allLanguage = config.language
-
+    isMusicStop = true
+    isPlayMusic = false
+    isLoopModeOn = false
     next()
 }
 
@@ -147,6 +150,42 @@ function next() {
     currentUtteranceIndex++
     console.log("currentUtteranceIndex:" + currentUtteranceIndex)
     startWithGetLastestData(function () {
+
+
+
+        if(sense[currentSense] == 'playback'){
+            if(isMusicStop){
+                currentUtteranceIndex == -1
+                playHappy()
+                return
+            }
+        }
+
+        if ((sense.length - 1) < currentSense) { //场景越界
+            if((position.length -1) > currentPosition){
+                currentPosition++
+                currentUtteranceIndex = -1
+                currentSense = 0
+
+                isPlayMusic = false
+                isLoopModeOn = false
+                isMusicStop = true
+
+                next()
+                return
+
+            }else {
+                //所有测试结束
+                controller.saveFile()
+                console.log('测试结束')
+                sender.send('console-event', 'result', '测试完毕！！！ ')
+                sender.send('console-test-end')
+                return
+            }
+
+        }
+
+
 
         // player
         sender.send('console-event', 'debug', "语言：" + allLanguage[currentLanguage] + "-位置：" + position[currentPosition]
@@ -177,10 +216,20 @@ function next() {
                     sender.send('console-event', 'result', JSON.stringify(_data))
                     xlsx.saveResult(allLanguage[currentLanguage], position[currentPosition], sense[currentSense], currentUtteranceIndex,_data)
                     console.log("currentSense:" + currentSense + ",(sense.length-1):" + (sense.length - 1))
+                    //这里判断是否在换场景的时候，当前的场景为playback ,若是，则stop music
+                    if(sense[currentSense] == 'playback'){
+                        playStop()
+                        return
+                    }
                     if ((sense.length - 1) > currentSense) {
+
+
+
+
                         currentSense++
                         currentUtteranceIndex = -1
                         console.log('切换场景')
+                        sender.send('console-event', 'debug','切换场景')
                         //这里判断是否为playback
                         if(sense[currentSense] == 'playback'){
 
@@ -191,10 +240,15 @@ function next() {
 
                             //当测试完毕后，需要stop music
 
+                            if(isMusicStop){
+                                playHappy()
+                            }
+                        }else{
+                            next()
                         }
 
 
-                        next()
+                        
                     } else {
 
                         //切换位置
@@ -203,6 +257,11 @@ function next() {
                             currentPosition++
                             currentUtteranceIndex = -1
                             currentSense = 0
+
+                            isPlayMusic = false
+                            isLoopModeOn = false
+                            isMusicStop = true
+
                             next()
 
                         }else {
@@ -220,7 +279,7 @@ function next() {
                 })
 
             }
-        }, 18000)
+        }, 20000)
     })
 
 }
@@ -240,13 +299,112 @@ function judgeNetwork() {
 
 }
 
-function playHappy(language){
+function playHappy(){
 
+    if(!isPlayMusic){
+        //播放
+        setTimeout(()=>{
+            player.playback(allLanguage[currentLanguage],'happy')
+        
 
-
-    setInterval(()=>{
+    setTimeout(()=>{
         //判断是否有播放
-    },20000)
+        //判断是否loop mode on
+        browersDriver.getPlayerInfo(deviceSerialNumber,(_data) => {
+            
+            let data = JSON.parse(_data)
+            let playerInfo = data.playerInfo
+            let infoText = playerInfo.infoText
+            if(playerInfo.state == 'PLAYING'){
+                console.log(infoText.subText1)
+                console.log(infoText.subText2)
+                console.log(infoText.subText2.indexOf("Happy"))
+                if(infoText != null && infoText.subText1 == 'Pharrell Williams' && infoText.subText2.indexOf("Happy") != -1){
+                    isPlayMusic = true
+                    sender.send('console-event', 'result', '播放Happy成功！')
+                    playLoopModeOn()
+                    return
+                }
+            }
+
+            playHappy(allLanguage[currentLanguage])
+        })
+
+        },15000)
+    },15000)
+        
+    }
+}
+
+function playLoopModeOn(language){
+    console.log(isLoopModeOn)
+    if(!isLoopModeOn){
+        setTimeout(()=>{
+            player.playback(allLanguage[currentLanguage],'loop')
+        
+        
+    
+
+     setTimeout(()=>{
+        //判断是否有播放
+        //判断是否loop mode on
+        browersDriver.getPlayerInfo(deviceSerialNumber,(_data) => {
+            
+            let data = JSON.parse(_data)
+            let playerInfo = data.playerInfo
+            if(playerInfo.state == 'PLAYING'){
+                
+
+                let tans = playerInfo.transport
+                if(tans != null && tans.repeat == 'SELECTED'){
+                    sender.send('console-event', 'result', 'Loop mode on成功！')
+                    isPlayMusic = true
+                    isLoopModeOn = true
+                    isMusicStop = false
+                    currentUtteranceIndex = -1
+                    next()
+                }
+
+            }else {
+                isPlayMusic = false
+                playHappy(allLanguage[currentLanguage])
+                }
+            })
+
+            },20000)
+        },15000)
+     }
+}
+
+function playStop(){
+    if(!isMusicStop){
+        setTimeout(()=>{
+            player.playback(allLanguage[currentLanguage],'stop')
+        
+
+     setTimeout(()=>{
+
+        browersDriver.getPlayerInfo(deviceSerialNumber,(_data) => {
+            
+            let data = JSON.parse(_data)
+            let playerInfo = data.playerInfo
+            if(playerInfo.state == null || playerInfo.state == 'PAUSED' || playerInfo.state == 'STOP'){
+                sender.send('console-event', 'result', '音乐停止成功！')
+                isPlayMusic = false
+                isMusicStop = true
+                currentSense++
+                currentUtteranceIndex = -1
+                console.log('切换场景1')
+                next()
+            }else{
+                playStop()
+            }
+
+        })
+     },15000)
+    },15000)
+        
+    }
 }
 
 controller.setTodoListId = function (_todoListId) {
