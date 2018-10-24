@@ -32,6 +32,10 @@ layui.use('form', function () {
     form.on('select(notify-language)', function(data){
         ipcRenderer.send('notify-language', data.value)
     });
+
+    form.on('select(notify-browers)', function(data){
+        ipcRenderer.send('notify-browers', data.value)
+    });
 });
 
 choiceCacheDir.addEventListener('click',()=>{

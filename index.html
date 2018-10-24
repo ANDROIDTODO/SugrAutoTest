@@ -25,14 +25,7 @@
 
     </header>
 
-    <form class="layui-form" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">是否受控:&nbsp&nbsp</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="controller" lay-skin="switch" lay-text="开启|关闭">
-            </div>
-        </div>
-    </form>
+    
 
     <form class="layui-form" action="">
         <div class="layui-form-item">
@@ -58,6 +51,19 @@
             <button class="layui-btn" id="choice-cache-dir"> 选择</button>
         </div>
     </div>
+
+     <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">浏览器:&nbsp&nbsp</label>
+            <div class="layui-input-block">
+                <select id="browers" name="browers" lay-verify="" lay-filter="notify-browers" style="width: 120px">
+                    <option value="firefox">火狐</option>
+                    <option value="chrome">谷歌</option>
+                    
+                </select>
+            </div>
+        </div>
+    </form>
 
 
     <form class="layui-form" action="">

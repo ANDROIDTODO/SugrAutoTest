@@ -1,12 +1,13 @@
-/**
+﻿/**
  * Created by Jeromeyang on 2018/9/5.
  */
 
 const {Builder, By, Key, until} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
-const chromedriver = require('chromedriver')
+const firefox = require('selenium-webdriver/firefox')
+// const chromedriver = require('chromedriver')
 
-chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build())
+//chrome.setDefaultService(new chrome.ServiceBuilder(chromedriver.path).build())
 
 const URL_LOGIN = "https://alexa.amazon.com/"
 const URL_DEVICE_LIST = 'https://alexa.amazon.com/api/devices-v2/device'
@@ -34,6 +35,7 @@ let driver = null
 let window = null
 let chromeOptions = null
 let language = null
+let browers = 'firefox'
 
 let deviceSnTypeMap = []
 
@@ -50,6 +52,10 @@ browserDriver.setLanguage = function(_language){
     language = _language
 }
 
+browserDriver.setBrowers = function(_browers){
+    browers = _browers
+}
+
 //需要返回 当前browers关闭状态,是否登录状态
 browserDriver.openBrowser = async function (f) {
 
@@ -57,7 +63,7 @@ browserDriver.openBrowser = async function (f) {
         return
     }
 
-    _chromeOption = new chrome.Options()
+    
     // _chromeOption.addArguments('--disable-gpu')
     // _chromeOption.addArguments('--hide-scrollbars')
     // _chromeOption.addArguments('blink-settings=imagesEnabled=false')
@@ -65,10 +71,11 @@ browserDriver.openBrowser = async function (f) {
     // _chromeOption.addArguments('–disable-javascript ')
     // _chromeOption.addArguments('–disable-plugins')
     // _chromeOption.headless()
-    driver = await new Builder().forBrowser('chrome')
-        .setChromeOptions(_chromeOption)
+
+    console.log(browers)
+    driver = await new Builder().forBrowser(browers)
         .build()
-    chromeOptions = driver.chromeOptions
+    
 
     window = driver.manage().window()
     // window.maximize()
